@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marv Moses Is Jellohead</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: url('prairie.gif') no-repeat center center;
+            background-size: cover;
+            animation: zoomEffect 5s linear infinite alternate;
+            position: relative;
+        }
+
+        @keyframes zoomEffect {
+            0% {
+                background-size: 100%;
+            }
+            100% {
+                background-size: 110%;
+            }
+        }
+
+        .logo {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            width: 30%; /* 1/5th of the width */
+            /* max-width: 150px; /* Optional: limit the max size */
+        }
+    </style>
+</head>
+<body>
+    <img src="logo.svg" alt="Logo" class="logo">
+</body>
+</html>

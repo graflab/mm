@@ -11,18 +11,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Ewert&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background: url('prairie.gif') no-repeat center center;
-      background-size: cover;
-      animation: zoomEffect 5s linear infinite alternate;
-    }
+body {
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Ewert", serif;
+}
 
+.background-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 80vh; /* Cropping bottom 1/5 (100 - 20 = 80) */
+  background: url('prairie.gif') no-repeat center center;
+  background-size: cover;
+  animation: zoomEffect 5s linear infinite alternate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
     @keyframes zoomEffect {
       0% {
         background-size: 100%;
@@ -70,9 +79,11 @@
  </style>
 </head>
 <body>
+<div class="background-wrapper">
   <div class="container">
     <img src="logo.svg" alt="Logo" class="logo">
     <a href="/jellohead" class="enter-button">Enter Site</a>
   </div>
+</div>
 </body>
 </html>

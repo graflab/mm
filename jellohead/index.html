@@ -11,53 +11,65 @@
   <link href="https://fonts.googleapis.com/css2?family=Ewert&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #000; /* Dark background for contrast */
-    }
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: "Ewert", serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  text-align: center;
+}
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
 
-    .logo {
-      width: 30vw;
-      max-width: 200px;
-      margin-bottom: 2rem;
-    }
+.logo {
+  width: 40vw;
+  max-width: 250px;
+  margin-bottom: 2rem;
+}
 
-    .nav-button {
-      display: inline-block;
-      width: 250px;
-      padding: 0.5em 1em;
-      margin: 0.5rem 0;
-      font-size: 1rem;
-      font-family: "Ewert", serif;
-      font-weight: 400;
-      text-transform: uppercase;
-      color: #000000;
-      background-color: #da291c;
-      border: 2px solid #da291c;
-      border-radius: 0.5em;
-      letter-spacing: 2px;
-      text-align: center;
-      text-decoration: none;
-      transition: all 0.3s ease-in-out;
-      box-shadow: 0 4px 15px rgba(218, 41, 28, 0.3);
-    }
+.nav-button {
+  display: inline-block;
+  width: 250px;
+  padding: 0.75em 1em;
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  font-family: "Ewert", serif;
+  text-transform: uppercase;
+  color: #000;
+  background-color: #da291c;
+  border: 2px solid #da291c;
+  border-radius: 0.5em;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 15px rgba(218, 41, 28, 0.3);
+}
 
-    .nav-button:hover {
-      background-color: transparent;
-      color: #da291c;
-      box-shadow: 0 0 10px #da291c, 0 0 20px #da291c inset;
-      transform: scale(1.05);
-    }
+.nav-button:hover {
+  background-color: transparent;
+  color: #da291c;
+  box-shadow: 0 0 10px #da291c, 0 0 20px #da291c inset;
+  transform: scale(1.05);
+}
+
+/* Responsive Tweaks */
+@media (max-width: 600px) {
+  .logo {
+    width: 60vw;
+  }
+  .nav-button {
+    width: 200px;
+    font-size: 1rem;
+    padding: 0.5em 0.75em;
+  }
+}
   </style>
 </head>
 <body>
@@ -72,4 +84,3 @@
   </div>
 </body>
 </html>
-python -m http.server 6968

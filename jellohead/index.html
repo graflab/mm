@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for social icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-u9bDvTg3PiDYa+7bbzF+dK3vNK7X/77MPzOW5d8hXxMzF13CeM6dt7AaJd4AKLIGL/38W6hHsCxtX6oKrme6FQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
 body {
@@ -72,8 +74,50 @@ body {
     padding: 0.5em 0.75em;
   }
 }
+
+
+.footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.social-icon {
+  background-color: #da291c;
+  color: #000;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(218, 41, 28, 0.4);
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.social-icon:hover {
+  background-color: transparent;
+  color: #da291c;
+  transform: scale(1.1);
+  border: 2px solid #da291c;
+}
+
+
   </style>
 </head>
+<div class="footer">
+  <a href="https://bandcamp.com" class="social-icon" target="_blank" aria-label="Bandcamp"><i class="fab fa-bandcamp"></i></a>
+  <a href="https://instagram.com" class="social-icon" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="mailto:contact@jellohead.com" class="social-icon" aria-label="Contact"><i class="fas fa-envelope"></i></a>
+</div>
+
+
+
 <body>
   <div class="container">
     <img src="logo.svg" alt="Logo" class="logo">

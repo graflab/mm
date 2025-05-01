@@ -18,34 +18,25 @@
   <style>
 body {
   margin: 0;
- /* height: 100vh; */
   font-family: "Merriweather", serif;
   font-weight: 400;
-  font-style: normal;
-  font-optical-sizing: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: #000;
+  color: #222;
   overflow: hidden;
-  color: #222; /* Softer text */
-  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .background-wrapper {
-  position: relative;
   width: 100vw;
   height: 100vh;
-  color: #000;
-  background-color: #000;
   background: url('prairie.gif') no-repeat center center;
   background-size: cover;
   animation: zoomEffect 5s linear infinite alternate;
   display: flex;
-  align-items: center;
   justify-content: center;
-  
-  mask-image: linear-gradient(to bottom, transparent 15%, black 15%, black 85%, transparent 85%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 15%, black 15%, black 85%, transparent 85%);
+  align-items: center;
 }
 
 @keyframes zoomEffect {

@@ -1,0 +1,20 @@
+# Ignore all virtual environments in any subdirectory
+**/venv/
+**/venv/*
+**/env/
+**/env/*
+**/.venv/
+**/.venv/*
+**/.env/
+**/.env/*
+
+# Common Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+

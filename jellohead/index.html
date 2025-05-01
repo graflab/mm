@@ -10,113 +10,106 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/assets/fontawesome/all.min.css" />
+  <!-- Self-hosted Font Awesome -->
+  <link rel="stylesheet" href="/assets/fontawesome/all.min.css" />
 
   <style>
-body {
-  margin: 0;
-  margin-bottom: 40px;
-  min-height: 100vh;
-  font-family: "Amatic SC", cursive;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #000;
-  text-align: center;
-}
+    body {
+      margin: 0;
+      margin-bottom: 40px;
+      min-height: 100vh;
+      font-family: "Amatic SC", cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      text-align: center;
+    }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.1rem;
-}
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.1rem;
+    }
 
-.logo {
-  width: 40vw;
-  max-width: 250px;
-  margin-bottom: 0.1rem;
-}
+    .logo {
+      width: 40vw;
+      max-width: 250px;
+      margin-bottom: 0.1rem;
+    }
 
-.nav-button {
-  display: inline-block;
-  width: 250px;
-  padding: 0.3em 0.75em;
-  margin: 0.15rem 0;
-  font-size: 2rem;
-  font-weight: 700;
-  font-family: "Amatic SC", cursive;
-  text-transform: uppercase;
-  color: #000;
-  background-color: #da291c;
-  border: 2px solid #da291c;
-  border-radius: 0.5em;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 15px rgba(218, 41, 28, 0.3);
-}
+    .nav-button {
+      display: inline-block;
+      width: 250px;
+      padding: 0.3em 0.75em;
+      margin: 0.15rem 0;
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: "Amatic SC", cursive;
+      text-transform: uppercase;
+      color: #000;
+      background-color: #da291c;
+      border: 2px solid #da291c;
+      border-radius: 0.5em;
+      text-decoration: none;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 15px rgba(218, 41, 28, 0.3);
+    }
 
-.nav-button:hover {
-  background-color: transparent;
-  color: #da291c;
-  box-shadow: 0 0 10px #da291c, 0 0 20px #da291c inset;
-  transform: scale(1.05);
-}
+    .nav-button:hover {
+      background-color: transparent;
+      color: #da291c;
+      box-shadow: 0 0 10px #da291c, 0 0 20px #da291c inset;
+      transform: scale(1.05);
+    }
 
-/* Responsive Tweaks */
-@media (max-width: 600px) {
-  .logo {
-    width: 60vw;
-  }
-  .nav-button {
-    width: 200px;
-    font-size: 1.5rem;
-    padding: 0.5em 0.75em;
-  }
-}
+    /* Footer social icons */
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      z-index: 1000;
+    }
 
+    .social-icon {
+      background-color: #da291c;
+      color: #000;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(218, 41, 28, 0.4);
+      transition: transform 0.3s, background-color 0.3s;
+    }
 
-.footer {
-  position: fixed;
-  bottom: 10px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 1.2rem;
-}
+    .social-icon:hover {
+      background-color: transparent;
+      color: #da291c;
+      transform: scale(1.1);
+      border: 2px solid #da291c;
+    }
 
-.social-icon {
-  background-color: #da291c;
-  color: #000;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  text-decoration: none;
-  box-shadow: 0 4px 10px rgba(218, 41, 28, 0.4);
-  transition: transform 0.3s, background-color 0.3s;
-}
-
-.social-icon:hover {
-  background-color: transparent;
-  color: #da291c;
-  transform: scale(1.1);
-  border: 2px solid #da291c;
-}
-
-
+    /* Responsive Tweaks */
+    @media (max-width: 600px) {
+      .logo {
+        width: 60vw;
+      }
+      .nav-button {
+        width: 200px;
+        font-size: 1.5rem;
+        padding: 0.5em 0.75em;
+      }
+    }
   </style>
 </head>
-<div class="footer">
-  <a href="https://bandcamp.com" class="social-icon" target="_blank" aria-label="Bandcamp"><i class="fab fa-bandcamp"></i></a>
-  <a href="https://instagram.com" class="social-icon" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-  <a href="mailto:contact@jellohead.com" class="social-icon" aria-label="Contact"><i class="fas fa-envelope"></i></a>
-</div>
-
-
 
 <body>
   <div class="container">
@@ -125,6 +118,12 @@ body {
     <a href="/jellohead/songs" class="nav-button">Songs</a>
     <a href="/jellohead/links" class="nav-button">Links</a>
     <a href="/jellohead/store" class="nav-button">Store</a>
+  </div>
+
+  <div class="footer">
+    <a href="https://bandcamp.com" class="social-icon" target="_blank" aria-label="Bandcamp"><i class="fab fa-bandcamp"></i></a>
+    <a href="https://instagram.com" class="social-icon" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="mailto:contact@jellohead.com" class="social-icon" aria-label="Contact"><i class="fas fa-envelope"></i></a>
   </div>
 </body>
 </html>

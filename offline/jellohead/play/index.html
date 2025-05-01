@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marv Moses - Bound Songbook</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --arrow-size: 48px;
+  }
+
+  body {
+    background: #f9f9f9;
+    margin: 0;
+    padding: 1rem;
+    font-family: 'Merriweather', serif;
+    color: #1A1A1A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: visible;
+    position: relative;
+  }
+
+  .book-container {
+    position: relative;
+    width: min(90vw, 850px);
+    height: calc(min(90vw, 850px) * 2/3);
+    margin-top: 1rem;
+    perspective: 2000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .book {
+    position: relative;
+    width: 90%;
+    height: 90%;
+  }
+
+  .page {
+    width: 90%;
+    height: 90%;
+    background: #ffffff;
+    border: 1px dashed #bbb;
+    border-radius: 8px;
+    box-shadow: 3px 6px 12px rgba(0,0,0,0.1);
+    padding: 2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.8s ease, z-index 0.8s ease;
+    transform-origin: left;
+    backface-visibility: hidden;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .page.flipped {
+    transform: rotateY(-180deg);
+    z-index: 0;
+  }
+
+  .page-content {
+    flex-grow: 1;
+    justify-content: center;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.6rem;
+  }
+
+  .page:not(:first-child) .page-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    text-align: left;
+    gap: 0.6rem;
+  }
+
+  .line {
+    display: block;
+    width: 100%;
+    margin: var(--vertical-margin) 0;
+    transform: translate(var(--x-offset), var(--y-offset));
+    font-size: var(--font-size);
+    letter-spacing: var(--letter-spacing);
+    font-weight: var(--font-weight);
+    line-height: 1.4;
+    text-align: inherit;
+  }
+
+  .page:not(:first-child) .line {
+    width: 48%;
+  }
+
+  /* Font size classes */
+  .text-large {
+    font-size: 1.5rem;
+  }
+
+  .text-medium {
+    font-size: 1.2rem;
+  }
+
+  .text-small {
+    font-size: 1rem;
+  }
+
+  .text-xsmall {
+    font-size: 0.85rem;
+  }
+
+  .page-number {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #777;
+    padding-top: 1rem;
+  }
+
+  .arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    width: var(--arrow-size);
+    height: var(--arrow-size);
+    border-radius: 50%;
+    border: none;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    z-index: 9999;
+    transition: background 0.3s;
+  }
+
+  .arrow:hover {
+    background: rgba(0,0,0,0.9);
+  }
+
+  #prev {
+    left: 1rem;
+  }
+
+  #next {
+    right: 1rem;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    :root {
+      --arrow-size: 40px;
+    }
+    .page {
+      padding: 1rem;
+    }
+    .line {
+      font-size: calc(var(--font-size) * 0.85);
+    }
+  }
+
+  @media (max-width: 480px) {
+    :root {
+      --arrow-size: 32px;
+    }
+    .arrow {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const pages = document.querySelectorAll('.page');
+      const nextButton = document.getElementById('next');
+      const prevButton = document.getElementById('prev');
+      let currentPage = 0;
+
+      nextButton.addEventListener('click', () => {
+        if (currentPage < pages.length) {
+          pages[currentPage].classList.add('flipped');
+          currentPage++;
+        }
+      });
+
+      prevButton.addEventListener('click', () => {
+        if (currentPage > 0) {
+          currentPage--;
+          pages[currentPage].classList.remove('flipped');
+        }
+      });
+
+      const lines = document.querySelectorAll('.line');
+      lines.forEach(line => {
+        const xOffset = (Math.random() * 4 - 2) + 'px';
+        const yOffset = (Math.random() * 2 - 1) + 'px';
+        const fontSize = (22 + Math.random() * 2) + 'px';
+        const letterSpacing = (Math.random() * 1 - 0.5) + 'px';
+        const fontWeight = '400';
+        const verticalMargin = (Math.random() * 4) + 'px';
+
+        line.style.setProperty('--x-offset', xOffset);
+        line.style.setProperty('--y-offset', yOffset);
+        line.style.setProperty('--font-size', fontSize);
+        line.style.setProperty('--letter-spacing', letterSpacing);
+        line.style.setProperty('--font-weight', fontWeight);
+        line.style.setProperty('--vertical-margin', verticalMargin);
+      });
+
+      document.querySelectorAll('.toc-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          const targetPage = parseInt(e.target.getAttribute('data-page'));
+          while (currentPage < targetPage) {
+            pages[currentPage].classList.add('flipped');
+            currentPage++;
+          }
+          while (currentPage > targetPage) {
+            currentPage--;
+            pages[currentPage].classList.remove('flipped');
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="book-container">
+    <div class="book">
+      <div class="page" style="z-index:16;">
+        <div class="page-content">
+          <div class="line"><strong>Marv Moses</strong></div>
+          <div class="line">Songbook Collection</div>
+          <div class="line">First Edition</div>
+        </div>
+        <div class="page-number">1</div>
+      </div>
+      <div class="page" style="z-index:15;">
+        <div class="page-content">
+          <div class="line"><strong>Table of Contents</strong></div>
+          <div class="line"><a class="toc-link" data-page="2">1. John the Revelator</a></div>
+          <div class="line"><a class="toc-link" data-page="3">2. Downtown Train</a></div>
+          <div class="line"><a class="toc-link" data-page="4">3. Time Trial</a></div>
+          <div class="line"><a class="toc-link" data-page="5">4. 00100100_For Dylana...</a></div>
+          <div class="line"><a class="toc-link" data-page="6">5. 10000001_Cruising</a></div>
+          <div class="line"><a class="toc-link" data-page="7">6. Winter Prelude</a></div>
+          <div class="line"><a class="toc-link" data-page="8">7. 01000010_Fire Inside</a></div>
+          <div class="line"><a class="toc-link" data-page="9">8. Tired Twin</a></div>
+          <div class="line"><a class="toc-link" data-page="10">9. Say I Can Stay</a></div>
+          <div class="line"><a class="toc-link" data-page="11">10. 00011000_Greasy Sun</a></div>
+          <div class="line"><a class="toc-link" data-page="12">11. Take 2</a></div>
+          <div class="line"><a class="toc-link" data-page="13">12. Summer Prelude</a></div>
+          <div class="line"><a class="toc-link" data-page="14">13. My Girl</a></div>
+        </div>
+        <div class="page-number">2</div>
+      </div>
+      <!-- Dummy song pages -->
+      <div class="page" style="z-index:14;"><div class="page-content"><div class="line"><strong>John the Revelator</strong></div></div><div class="page-number">3</div></div>
+      <div class="page" style="z-index:13;"><div class="page-content"><div class="line"><strong>Downtown Train</strong></div></div><div class="page-number">4</div></div>
+      <div class="page" style="z-index:12;"><div class="page-content"><div class="line"><strong>Time Trial</strong></div></div><div class="page-number">5</div></div>
+      <div class="page" style="z-index:11;"><div class="page-content"><div class="line"><strong>00100100_For Dylana...</strong></div></div><div class="page-number">6</div></div>
+      <div class="page" style="z-index:10;"><div class="page-content"><div class="line"><strong>10000001_Cruising</strong></div></div><div class="page-number">7</div></div>
+      <div class="page" style="z-index:9;"><div class="page-content"><div class="line"><strong>Winter Prelude</strong></div></div><div class="page-number">8</div></div>
+      <div class="page" style="z-index:8;"><div class="page-content"><div class="line"><strong>01000010_Fire Inside</strong></div></div><div class="page-number">9</div></div>
+      <div class="page" style="z-index:7;"><div class="page-content"><div class="line"><strong>Tired Twin</strong></div></div><div class="page-number">10</div></div>
+      <div class="page" style="z-index:6;"><div class="page-content"><div class="line"><strong>Say I Can Stay</strong></div></div><div class="page-number">11</div></div>
+      <div class="page" style="z-index:5;"><div class="page-content"><div class="line"><strong>00011000_Greasy Sun</strong></div></div><div class="page-number">12</div></div>
+      <div class="page" style="z-index:4;"><div class="page-content"><div class="line"><strong>Take 2</strong></div></div><div class="page-number">13</div></div>
+      <div class="page" style="z-index:3;"><div class="page-content"><div class="line"><strong>Summer Prelude</strong></div></div><div class="page-number">14</div></div>
+      <div class="page" style="z-index:2;"><div class="page-content"><div class="line"><strong>My Girl</strong></div></div><div class="page-number">15</div></div>
+    </div>
+  </div>
+
+  <button class="arrow" id="prev">&#8592;</button>
+  <button class="arrow" id="next">&#8594;</button>
+</body>
+</html>

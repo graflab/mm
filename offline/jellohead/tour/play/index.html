@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marv Moses - Bound Songbook</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: #f9f9f9;
+      margin: 0;
+      padding: 1rem;
+      font-family: 'Merriweather', serif;
+      color: #1A1A1A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .book {
+      position: relative;
+      width: 90%;
+      max-width: 850px;
+      aspect-ratio: 17/12;
+      perspective: 2000px;
+      margin-top: 2rem;
+    }
+
+    .page {
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      border: 1px dashed #bbb;
+      border-radius: 8px;
+      box-shadow: 3px 6px 12px rgba(0,0,0,0.1);
+      padding: 2rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: transform 0.8s ease, z-index 0.8s ease;
+      transform-origin: left;
+      backface-visibility: hidden;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .page.flipped {
+      transform: rotateY(-180deg);
+      z-index: 0;
+    }
+
+    .page-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      flex-grow: 1;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .line {
+      display: inline-block;
+      margin: var(--vertical-margin) 0;
+      transform: translate(var(--x-offset), var(--y-offset));
+      font-size: var(--font-size);
+      letter-spacing: var(--letter-spacing);
+      font-weight: var(--font-weight);
+      line-height: 1.4;
+    }
+
+    .page-number {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #777;
+      padding-top: 1rem;
+    }
+
+    .controls {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-family: inherit;
+      border: none;
+      background: #444;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #000;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        padding: 1rem;
+      }
+
+      .line {
+        font-size: calc(var(--font-size) * 0.85);
+      }
+
+      button {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const pages = document.querySelectorAll('.page');
+      const nextButton = document.getElementById('next');
+      const prevButton = document.getElementById('prev');
+      let currentPage = 0;
+
+      nextButton.addEventListener('click', () => {
+        if (currentPage < pages.length) {
+          pages[currentPage].classList.add('flipped');
+          currentPage++;
+        }
+      });
+
+      prevButton.addEventListener('click', () => {
+        if (currentPage > 0) {
+          currentPage--;
+          pages[currentPage].classList.remove('flipped');
+        }
+      });
+
+      // Random slight messy styling for all lines
+      const lines = document.querySelectorAll('.line');
+      lines.forEach(line => {
+        const xOffset = (Math.random() * 4 - 2) + 'px';
+        const yOffset = (Math.random() * 2 - 1) + 'px';
+        const fontSize = (22 + Math.random() * 2) + 'px';
+        const letterSpacing = (Math.random() * 1 - 0.5) + 'px';
+        const fontWeight = '400';
+        const verticalMargin = (Math.random() * 4) + 'px';
+
+        line.style.setProperty('--x-offset', xOffset);
+        line.style.setProperty('--y-offset', yOffset);
+        line.style.setProperty('--font-size', fontSize);
+        line.style.setProperty('--letter-spacing', letterSpacing);
+        line.style.setProperty('--font-weight', fontWeight);
+        line.style.setProperty('--vertical-margin', verticalMargin);
+      });
+
+      // Link TOC clicks to flipping
+      document.querySelectorAll('.toc-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          const targetPage = parseInt(e.target.getAttribute('data-page'));
+          while (currentPage < targetPage) {
+            pages[currentPage].classList.add('flipped');
+            currentPage++;
+          }
+          while (currentPage > targetPage) {
+            currentPage--;
+            pages[currentPage].classList.remove('flipped');
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <div class="book">
+    <!-- Pages here: Cover, TOC, and all songs -->
+    <!-- Keep your previous page structure unchanged here (Cover, TOC, Songs...) -->
+  </div>
+
+  <div class="controls">
+    <button id="prev">Prev Page</button>
+    <button id="next">Next Page</button>
+  </div>
+
+</body>
+</html>

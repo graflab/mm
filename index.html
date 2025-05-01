@@ -5,20 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marv Moses Is Jellohead</title>
 
-  <!-- Ewert Font Embed -->
+  <!-- Preconnect for fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ewert&display=swap" rel="stylesheet">
+
+  <!-- Merriweather: body font -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:opsz,wght@auto,300..900&display=swap" rel="stylesheet">
+
+  <!-- Amatic SC: button font -->
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
 body {
   margin: 0;
-  height: 100vh;
-  font-family: "Ewert", serif;
+ /* height: 100vh; */
+  font-family: "Merriweather", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-optical-sizing: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  color: #222; /* Softer text */
+  background-color: #fff;
 }
 
 .background-wrapper {
@@ -32,7 +42,6 @@ body {
   align-items: center;
   justify-content: center;
   
-  /* Crop the top and bottom 15% */
   mask-image: linear-gradient(to bottom, transparent 15%, black 15%, black 85%, transparent 85%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 15%, black 15%, black 85%, transparent 85%);
 }
@@ -61,18 +70,19 @@ body {
 }
 
 .enter-button {
-  padding: 0.75em 2em;
-  font-size: 1.2rem;
-  font-family: "Ewert", serif;
-  font-weight: 500;
-  text-transform: uppercase;
-  color: #ffffff;
+  padding: 0.75em 2.5em;
+  font-size: 2rem; /* bigger because Amatic SC is skinny */
+  font-family: "Amatic SC", cursive;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.03em;
+  color: #000;
   background-color: #da291c;
   border: 2px solid #da291c;
-  border-radius: 0.5em;
+  border-radius: 0.75em;
   text-decoration: none;
   transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 15px rgba(218, 41, 28, 0.3);
+  box-shadow: 0 4px 12px rgba(218, 41, 28, 0.25);
 }
 
 .enter-button:hover {
@@ -88,8 +98,8 @@ body {
     width: 60vw;
   }
   .enter-button {
-    font-size: 1rem;
-    padding: 0.5em 1.5em;
+    font-size: 1.6rem;
+    padding: 0.5em 2em;
   }
 }
   </style>
@@ -98,7 +108,7 @@ body {
   <div class="background-wrapper">
     <div class="container">
       <img src="logo.svg" alt="Logo" class="logo">
-      <a href="/jellohead" class="enter-button">Enter Site</a>
+      <a href="/jellohead" class="enter-button">begin</a>
     </div>
   </div>
 </body>

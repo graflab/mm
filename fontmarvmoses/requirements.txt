@@ -1,0 +1,14 @@
+# For image processing and contour detection
+opencv-python==4.9.0.80
+numpy==1.26.4
+
+# Font creation with FontForge's Python bindings
+# NOTE: fontforge must be installed on your system, not via pip.
+# See: https://fontforge.org/en-US/downloads/
+
+# Optional: for file and image manipulation
+Pillow==10.3.0
+
+# Optional: if automating SVG conversion (needs Inkscape installed separately)
+# subprocess module is built-in; just list Pillow if doing raster manipulations
+

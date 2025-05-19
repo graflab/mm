@@ -25,7 +25,6 @@ body {
   overflow: hidden;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .background-wrapper {
@@ -36,7 +35,6 @@ body {
   animation: zoomEffect 5s linear infinite alternate;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 @keyframes zoomEffect {
@@ -54,6 +52,7 @@ body {
   align-items: center;
   text-align: center;
   padding: 1rem;
+  margin-top: 10vh; /* Adds controlled space above logo, halving the default centering space */
 }
 
 .logo {
@@ -93,6 +92,9 @@ body {
   .enter-button {
     font-size: 1.6rem;
     padding: 0.5em 2em;
+  }
+  .container {
+    margin-top: 5vh; /* Slightly less top margin on smaller screens */
   }
 }
   </style>

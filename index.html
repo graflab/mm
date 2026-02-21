@@ -5,105 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marv Moses Is Jellohead</title>
 
-  <!-- Preconnect for fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <!-- Roboto Condensed: body font (Boards of Canada style) -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
-
-  <!-- Roboto Condensed: button font (keeping consistent) -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
 
   <style>
-body {
-  margin: 0;
-  font-family: "Roboto Condensed", sans-serif;
-  font-weight: 400;
-  background-color: #000;
-  color: #222;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-}
+    body {
+      margin: 0;
+      font-family: "Roboto Condensed", sans-serif;
+      background-color: #000;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-.background-wrapper {
-  width: 100vw;
-  height: 100vh;
-  background: url('prairie.gif') no-repeat center center;
-  background-size: cover;
-  animation: zoomEffect 5s linear infinite alternate;
-  display: flex;
-  justify-content: center;
-}
+    .background-wrapper {
+      width: 100vw;
+      height: 100vh;
+      background: url('prairie.gif') no-repeat center center;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-@keyframes zoomEffect {
-  0% {
-    background-size: 100%;
-  }
-  100% {
-    background-size: 100%;
-  }
-}
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1rem;
+    }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 10vh; /* Adds controlled space above logo, halving the default centering space */
-}
+    .logo-link {
+      display: inline-block;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      cursor: pointer;
+    }
 
-.logo {
-  width: 120vw;
-  max-width: 750px;
-  margin-bottom: 1.5rem;
-}
+    .logo-link:hover {
+      transform: scale(1.06);
+      filter: drop-shadow(0 0 18px rgba(218, 41, 28, 0.6));
+    }
 
-.enter-button {
-  padding: 1em 1em;
-  font-size: 1.2rem;
-  font-family: "Roboto Condensed", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  letter-spacing: 0.05em;
-  color: #000;
-  background-color: #da291c;
-  border: 2px solid #da291c;
-  border-radius: 0.75em;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 12px rgba(218, 41, 28, 0.25);
-}
+    .logo {
+      width: 70vw;
+      max-width: 500px;
+      display: block;
+    }
 
-.enter-button:hover {
-  background-color: transparent;
-  color: #da291c;
-  box-shadow: 0 0 10px #da291c, 0 0 20px #da291c inset;
-  transform: scale(1.05);
-}
-
-/* Responsive Tweaks */
-@media (max-width: 600px) {
-  .logo {
-    width: 60vw;
-  }
-  .enter-button {
-    font-size: 1.4rem;
-    padding: 0.5em 2em;
-  }
-  .container {
-    margin-top: 5vh; /* Slightly less top margin on smaller screens */
-  }
-}
+    @media (max-width: 600px) {
+      .logo {
+        width: 80vw;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="background-wrapper">
     <div class="container">
-      <img src="logo.svg" alt="Logo" class="logo" href="/jellohead">
-      <a href="/jellohead" class="enter-button">➡ </a>
+      <a href="/jellohead" class="logo-link" aria-label="Enter site">
+        <img src="logo.svg" alt="Marv Moses — Click to enter" class="logo">
+      </a>
     </div>
   </div>
 </body>

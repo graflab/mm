@@ -9,27 +9,56 @@
     body {
       margin: 0;
       font-family: "Roboto Condensed", sans-serif;
-      font-size: 2rem;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       min-height: 100vh;
       background: #000;
       color: #da291c;
       text-align: center;
-      padding: 1rem;
+      padding: 2rem 1rem;
+    }
+    .logo-link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .logo-link:hover {
+      transform: scale(1.06);
+      filter: drop-shadow(0 0 14px rgba(218, 41, 28, 0.5));
+    }
+    .logo-link img {
+      width: 25vw;
+      max-width: 120px;
+      display: block;
+    }
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin: 0 0 1rem;
     }
     .content {
       max-width: 600px;
     }
+    .content img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 1rem;
+    }
+    @media (max-width: 600px) {
+      .logo-link img { width: 35vw; }
+      h1 { font-size: 1.3rem; }
+    }
   </style>
 </head>
 <body>
+  <a href="/jellohead" class="logo-link" aria-label="Back to home">
+    <img src="/jellohead/logo.svg" alt="Marv Moses">
+  </a>
   <div class="content">
     <h1>Marv Moses on the Web</h1>
-<img src="/construction.gif" alt="Under Construction" style="max-width: 100%; height: auto; margin-top: 1rem;">
-
-    <p><a href="/" style="color:#da291c;text-decoration:underline;">Back Home</a></p>
+    <img src="/construction.gif" alt="Under Construction">
   </div>
 </body>
 </html>

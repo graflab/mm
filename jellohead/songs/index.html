@@ -120,6 +120,15 @@
       color: var(--accent);
     }
 
+    .note {
+      margin: 0.8rem 1.3rem 0;
+      font-family: "Roboto Condensed", sans-serif;
+      letter-spacing: 0.04em;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
     @media (max-width: 600px) {
       body {
         padding: 1.3rem 0.7rem 2rem;
@@ -185,10 +194,16 @@
       return article;
     }
 
-    function renderSongbook(entries) {
+    function renderSongbook(entries, failureCount) {
       container.textContent = "";
       if (entries.length > 0) {
         entries.forEach((entry) => container.appendChild(entry));
+        if (failureCount > 0) {
+          const note = document.createElement("p");
+          note.className = "note";
+          note.textContent = "Some songs are temporarily unavailable.";
+          container.appendChild(note);
+        }
         return;
       }
       const message = document.createElement("p");
@@ -221,7 +236,7 @@
         console.error("Songbook lyric load failures:", failures.map((failure) => failure.message || String(failure)));
       }
 
-      renderSongbook(entries);
+      renderSongbook(entries, failures.length);
     }
 
     loadSongbook();

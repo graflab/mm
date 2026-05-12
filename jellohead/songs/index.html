@@ -191,7 +191,7 @@
           songs.map(async ({ title, file }) => {
             const response = await fetch(`/assets/lyrics/${file}`);
             if (!response.ok) {
-              throw new Error(`Could not load ${file}`);
+              throw new Error(`Could not load ${file}: ${response.status} ${response.statusText}`);
             }
             const text = (await response.text()).trim();
             return makeSongElement(title, text);
@@ -200,6 +200,7 @@
         container.textContent = "";
         entries.forEach((entry) => container.appendChild(entry));
       } catch (error) {
+        console.error("Songbook lyric load failed:", error);
         container.textContent = "";
         const message = document.createElement("p");
         message.className = "error";

@@ -215,7 +215,8 @@
     async function loadSongbook() {
       const results = await Promise.allSettled(
         songs.map(async ({ title, file }) => {
-          const response = await fetch(`/assets/lyrics/${file}`);
+          const safeFile = encodeURIComponent(file);
+          const response = await fetch(`/assets/lyrics/${safeFile}`);
           if (!response.ok) {
             throw new Error(`Could not load ${file}: ${response.status} ${response.statusText}`);
           }
@@ -228,10 +229,12 @@
         .filter((result) => result.status === "fulfilled")
         .map((result) => result.value.element);
 
-      const failureTitles = results
-        .map((result, index) => ({ result, title: songs[index].title }))
-        .filter(({ result }) => result.status === "rejected")
-        .map(({ title }) => title);
+      const failureTitles = results.reduce((titles, result, index) => {
+        if (result.status === "rejected") {
+          titles.push(songs[index].title);
+        }
+        return titles;
+      }, []);
 
       if (failureTitles.length > 0) {
         console.error("Songbook lyric load failures:", failureTitles);

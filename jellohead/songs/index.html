@@ -186,21 +186,33 @@
     }
 
     async function loadSongbook() {
-      try {
-        const entries = await Promise.all(
-          songs.map(async ({ title, file }) => {
-            const response = await fetch(`/assets/lyrics/${file}`);
-            if (!response.ok) {
-              throw new Error(`Could not load ${file}: ${response.status} ${response.statusText}`);
-            }
-            const text = (await response.text()).trim();
-            return makeSongElement(title, text);
-          })
-        );
-        container.textContent = "";
+      const results = await Promise.allSettled(
+        songs.map(async ({ title, file }) => {
+          const response = await fetch(`/assets/lyrics/${file}`);
+          if (!response.ok) {
+            throw new Error(`Could not load ${file}: ${response.status} ${response.statusText}`);
+          }
+          const text = (await response.text()).trim();
+          return makeSongElement(title, text);
+        })
+      );
+
+      const entries = results
+        .filter((result) => result.status === "fulfilled")
+        .map((result) => result.value);
+
+      const failures = results
+        .filter((result) => result.status === "rejected")
+        .map((result) => result.reason);
+
+      if (failures.length > 0) {
+        console.error("Songbook lyric load failures:", failures);
+      }
+
+      container.textContent = "";
+      if (entries.length > 0) {
         entries.forEach((entry) => container.appendChild(entry));
-      } catch (error) {
-        console.error("Songbook lyric load failed:", error);
+      } else {
         container.textContent = "";
         const message = document.createElement("p");
         message.className = "error";

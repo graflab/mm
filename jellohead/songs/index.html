@@ -189,7 +189,7 @@
       try {
         const entries = await Promise.all(
           songs.map(async ({ title, file }) => {
-            const response = await fetch(`/assets/lyrics/${file}`, { cache: "no-store" });
+            const response = await fetch(`/assets/lyrics/${file}`);
             if (!response.ok) {
               throw new Error(`Could not load ${file}`);
             }
@@ -200,7 +200,11 @@
         container.textContent = "";
         entries.forEach((entry) => container.appendChild(entry));
       } catch (error) {
-        container.innerHTML = '<p class="error">Unable to load lyrics right now.</p>';
+        container.textContent = "";
+        const message = document.createElement("p");
+        message.className = "error";
+        message.textContent = "Unable to load lyrics right now.";
+        container.appendChild(message);
       }
     }
 

@@ -194,14 +194,14 @@
       return article;
     }
 
-    function renderSongbook(entries, failureCount) {
+    function renderSongbook(entries, failureTitles) {
       container.textContent = "";
       if (entries.length > 0) {
         entries.forEach((entry) => container.appendChild(entry));
-        if (failureCount > 0) {
+        if (failureTitles.length > 0) {
           const note = document.createElement("p");
           note.className = "note";
-          note.textContent = "Some songs are temporarily unavailable.";
+          note.textContent = `Unavailable right now: ${failureTitles.join(", ")}.`;
           container.appendChild(note);
         }
         return;
@@ -219,24 +219,25 @@
           if (!response.ok) {
             throw new Error(`Could not load ${file}: ${response.status} ${response.statusText}`);
           }
-          const text = (await response.text()).trim();
-          return makeSongElement(title, text);
+          const text = await response.text();
+          return { title, element: makeSongElement(title, text) };
         })
       );
 
       const entries = results
         .filter((result) => result.status === "fulfilled")
-        .map((result) => result.value);
+        .map((result) => result.value.element);
 
-      const failures = results
-        .filter((result) => result.status === "rejected")
-        .map((result) => result.reason);
+      const failureTitles = results
+        .map((result, index) => ({ result, title: songs[index].title }))
+        .filter(({ result }) => result.status === "rejected")
+        .map(({ title }) => title);
 
-      if (failures.length > 0) {
-        console.error("Songbook lyric load failures:", failures.map((failure) => failure.message || String(failure)));
+      if (failureTitles.length > 0) {
+        console.error("Songbook lyric load failures:", failureTitles);
       }
 
-      renderSongbook(entries, failures.length);
+      renderSongbook(entries, failureTitles);
     }
 
     loadSongbook();

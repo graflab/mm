@@ -185,12 +185,24 @@
       return article;
     }
 
+    function renderSongbook(entries) {
+      container.textContent = "";
+      if (entries.length > 0) {
+        entries.forEach((entry) => container.appendChild(entry));
+        return;
+      }
+      const message = document.createElement("p");
+      message.className = "error";
+      message.textContent = "Unable to load lyrics right now.";
+      container.appendChild(message);
+    }
+
     async function loadSongbook() {
       const results = await Promise.allSettled(
         songs.map(async ({ title, file }) => {
           const response = await fetch(`/assets/lyrics/${file}`);
           if (!response.ok) {
-            throw new Error(`Could not load ${file}: ${response.status} ${response.statusText}`);
+            throw new Error(`Could not load ${file}`);
           }
           const text = (await response.text()).trim();
           return makeSongElement(title, text);
@@ -209,15 +221,7 @@
         console.error("Songbook lyric load failures:", failures);
       }
 
-      container.textContent = "";
-      if (entries.length > 0) {
-        entries.forEach((entry) => container.appendChild(entry));
-      } else {
-        const message = document.createElement("p");
-        message.className = "error";
-        message.textContent = "Unable to load lyrics right now.";
-        container.appendChild(message);
-      }
+      renderSongbook(entries);
     }
 
     loadSongbook();

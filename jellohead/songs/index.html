@@ -213,7 +213,6 @@
       if (entries.length > 0) {
         entries.forEach((entry) => container.appendChild(entry));
       } else {
-        container.textContent = "";
         const message = document.createElement("p");
         message.className = "error";
         message.textContent = "Unable to load lyrics right now.";

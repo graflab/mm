@@ -3,62 +3,247 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Songs - Marv Moses Is Jellohead</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+  <title>Songbook - Marv Moses Is Jellohead</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #090909;
+      --ink: #d8cbb4;
+      --muted: #9f9380;
+      --line: #3a3328;
+      --accent: #da291c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: "Roboto Condensed", sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       min-height: 100vh;
-      background: #000;
-      color: #da291c;
-      text-align: center;
-      padding: 2rem 1rem;
+      background: radial-gradient(circle at top, #181818 0%, var(--bg) 55%);
+      color: var(--ink);
+      font-family: "Cormorant Garamond", serif;
+      line-height: 1.45;
+      padding: 2rem 1rem 3rem;
     }
+
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
     .logo-link {
       display: inline-block;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       transition: transform 0.3s ease, filter 0.3s ease;
     }
+
     .logo-link:hover {
-      transform: scale(1.06);
-      filter: drop-shadow(0 0 14px rgba(218, 41, 28, 0.5));
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 14px rgba(218, 41, 28, 0.45));
     }
+
     .logo-link img {
-      width: 25vw;
+      width: 22vw;
       max-width: 120px;
       display: block;
     }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
     h1 {
-      font-size: 1.6rem;
-      font-weight: 700;
+      margin: 0.3rem 0 0.2rem;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: #e3d8c6;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-family: "Roboto Condensed", sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .book {
+      background: linear-gradient(175deg, rgba(23, 23, 23, 0.92), rgba(10, 10, 10, 0.96));
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+      padding: 1rem 0;
+    }
+
+    .song {
+      padding: 1.25rem 1.3rem 1.4rem;
+      border-top: 1px solid rgba(159, 147, 128, 0.2);
+    }
+
+    .song:first-child {
+      border-top: 0;
+    }
+
+    .song h2 {
+      margin: 0 0 0.65rem;
+      color: #f0e7d8;
+      font-size: clamp(1.35rem, 3vw, 1.8rem);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .lyrics {
+      margin: 0;
+      white-space: pre-wrap;
+      color: var(--ink);
+      font-size: 1.12rem;
+    }
+
+    .loading,
+    .error {
+      text-align: center;
+      font-family: "Roboto Condensed", sans-serif;
       letter-spacing: 0.05em;
-      margin: 0 0 1rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 1.6rem;
     }
-    .content {
-      max-width: 600px;
+
+    .error {
+      color: var(--accent);
     }
-    .content img {
-      max-width: 100%;
-      height: auto;
-      margin-top: 1rem;
+
+    .note {
+      margin: 0.8rem 1.3rem 0;
+      font-family: "Roboto Condensed", sans-serif;
+      letter-spacing: 0.04em;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
     }
+
     @media (max-width: 600px) {
-      .logo-link img { width: 35vw; }
-      h1 { font-size: 1.3rem; }
+      body {
+        padding: 1.3rem 0.7rem 2rem;
+      }
+
+      .logo-link img {
+        width: 30vw;
+      }
+
+      .song {
+        padding: 1rem 1rem 1.2rem;
+      }
+
+      .lyrics {
+        font-size: 1.02rem;
+      }
     }
   </style>
 </head>
 <body>
-  <a href="/jellohead" class="logo-link" aria-label="Back to home">
-    <img src="/jellohead/logo.svg" alt="Marv Moses">
-  </a>
-  <div class="content">
-    <h1>Songs</h1>
-    <img src="/construction.gif" alt="Under Construction">
+  <div class="wrap">
+    <header>
+      <a href="/jellohead" class="logo-link" aria-label="Back to home">
+        <img src="/jellohead/logo.svg" alt="Marv Moses">
+      </a>
+      <h1>Songbook</h1>
+      <p class="subtitle">Lyrics for the road, the room, and the years</p>
+    </header>
+
+    <main id="songbook" class="book" aria-live="polite">
+      <p class="loading">Loading songbook…</p>
+    </main>
   </div>
+
+  <script>
+    const songs = [
+      { title: "A Fire Inside", file: "A_Fire_Inside.txt" },
+      { title: "Come Back Down", file: "Come_Back_Down.txt" },
+      { title: "Greasy Sun", file: "Greasy_Sun.txt" },
+      { title: "Halifax", file: "Halifax.txt" },
+      { title: "Sagebrush", file: "Sagebrush.txt" },
+      { title: "Sunrise", file: "Sunrise.txt" },
+      { title: "Take Two", file: "Take_Two.txt" },
+      { title: "Tired Twin", file: "Tired_Twin.txt" },
+      { title: "Well Dad", file: "Well_Dad.txt" }
+    ];
+
+    const container = document.getElementById("songbook");
+
+    function makeSongElement(title, lyrics) {
+      const article = document.createElement("article");
+      article.className = "song";
+
+      const heading = document.createElement("h2");
+      heading.textContent = title;
+
+      const pre = document.createElement("pre");
+      pre.className = "lyrics";
+      pre.textContent = lyrics;
+
+      article.appendChild(heading);
+      article.appendChild(pre);
+      return article;
+    }
+
+    function renderSongbook(entries, failureTitles) {
+      container.textContent = "";
+      if (entries.length > 0) {
+        entries.forEach((entry) => container.appendChild(entry));
+        if (failureTitles.length > 0) {
+          const note = document.createElement("p");
+          note.className = "note";
+          note.textContent = `Unavailable right now: ${failureTitles.join(", ")}.`;
+          container.appendChild(note);
+        }
+        return;
+      }
+      const message = document.createElement("p");
+      message.className = "error";
+      message.textContent = "Unable to load lyrics right now.";
+      container.appendChild(message);
+    }
+
+    async function loadSongbook() {
+      const results = await Promise.allSettled(
+        songs.map(async ({ title, file }) => {
+          const safeFile = encodeURIComponent(file);
+          const response = await fetch(`/assets/lyrics/${safeFile}`);
+          if (!response.ok) {
+            throw new Error(`Could not load ${file}: ${response.status} ${response.statusText}`);
+          }
+          const text = await response.text();
+          return { title, element: makeSongElement(title, text) };
+        })
+      );
+
+      const entries = results
+        .filter((result) => result.status === "fulfilled")
+        .map((result) => result.value.element);
+
+      const failureTitles = results.reduce((titles, result, index) => {
+        if (result.status === "rejected") {
+          titles.push(songs[index].title);
+        }
+        return titles;
+      }, []);
+
+      if (failureTitles.length > 0) {
+        console.error("Songbook lyric load failures:", failureTitles);
+      }
+
+      renderSongbook(entries, failureTitles);
+    }
+
+    loadSongbook();
+  </script>
 </body>
 </html>

@@ -6,25 +6,26 @@
   <title>Songbook - Marv Moses Is Jellohead</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:wght@400;500;600&family=Roboto+Condensed:wght@300;400;700&family=Special+Elite&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:wght@400;500;600&family=Roboto+Condensed:wght@300;400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Special+Elite&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-deep:        #000;
-      --bg-warm:        #150b07;
-      --ink:            #2a1d10;
-      --ink-soft:       #4a3826;
-      --muted:          #7a6a52;
-      --paper:          #f3e3bd;
-      --paper-hi:       #f8ecc6;
-      --paper-edge:     #d9c391;
-      --paper-shadow:   #ad9362;
-      --leather:        #2e1800;
-      --leather-hi:     #5b3a1d;
-      --leather-lo:     #1a0c04;
-      --gold:           #c9a86a;
+      --bg-warm:        #0a0a0a;
+      --ink:            #1d1a16;
+      --ink-soft:       #4a443c;
+      --muted:          #8a8378;
+      --paper:          #f3efe4;
+      --paper-hi:       #f7f3e9;
+      --paper-edge:     #e6e0d0;
+      --paper-shadow:   #b8b0a0;
+      --leather:        #1a1a1a;
+      --leather-hi:     #2a2a2a;
+      --leather-lo:     #0a0a0a;
+      --gold:           #b8a880;
       --accent:         #da291c;
       --accent-dark:    #7a1410;
-      --line:           #b9a47c;
+      --line:           #c9c0ad;
+      --ff-serif:       "minion-pro", "Source Serif 4", "Source Serif Pro", "EB Garamond", Georgia, serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -35,7 +36,7 @@
       margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(ellipse at 50% 0%, #1a0f08 0%, var(--bg-warm) 40%, var(--bg-deep) 100%);
+        radial-gradient(ellipse at 50% 0%, #141414 0%, var(--bg-warm) 40%, var(--bg-deep) 100%);
       color: #d8cbb4;
       font-family: "Roboto Condensed", "Cormorant Garamond", serif;
       padding: 1rem 1rem 1.5rem;
@@ -82,100 +83,65 @@
 
     .scene {
       perspective: 2400px;
-      perspective-origin: 50% 30%;
+      perspective-origin: 50% 50%;
       padding: 0.5rem 0 0.2rem;
     }
 
     .book-shadow {
       position: relative;
       margin: 0 auto;
-      width: min(96%, 760px);
-      filter: drop-shadow(0 30px 40px rgba(0,0,0,0.55));
+      width: min(98%, 1040px);
+      filter: drop-shadow(0 24px 32px rgba(0,0,0,0.55));
     }
 
-    /* Tilted/leveling holder */
+    /* Book holder — lays flat, no tilt */
     .book {
       position: relative;
       width: 100%;
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 4 / 3;
       max-height: calc(100vh - 200px);
       transform-style: preserve-3d;
-      transform: rotateX(14deg) rotateZ(-2.5deg);
-      transition: transform 900ms cubic-bezier(.165,.84,.44,1);
     }
 
-    .book:hover,
-    .book:focus-within {
-      transform: rotateX(4deg) rotateZ(-0.6deg);
-    }
-
-    /* Outer leather cover (rendered behind pages) */
+    /* Outer cover (rendered behind pages) — Moleskine-style matte black */
     .cover {
       position: absolute;
-      inset: -10px -10px -10px -14px;
-      border-radius: 6px 12px 12px 6px;
+      inset: -8px -8px -8px -12px;
+      border-radius: 4px 8px 8px 4px;
       background:
-        radial-gradient(ellipse at 30% 20%, #4a2611 0%, transparent 55%),
-        radial-gradient(ellipse at 80% 90%, #1a0c04 0%, transparent 55%),
-        linear-gradient(160deg, var(--leather-hi) 0%, var(--leather) 45%, var(--leather-lo) 100%);
+        linear-gradient(160deg, var(--leather-hi) 0%, var(--leather) 50%, var(--leather-lo) 100%);
       box-shadow:
-        inset 4px -4px 6px 1px rgba(99, 86, 72, 0.6),
-        inset 6px -6px 8px 0 rgba(34, 27, 20, 0.9),
-        inset -3px 3px 6px 0 rgba(34, 27, 20, 0.6),
+        inset 0 0 0 1px rgba(255,255,255,0.03),
+        inset 0 -2px 4px rgba(0,0,0,0.6),
         0 2px 0 0 rgba(0,0,0,0.6);
       z-index: 0;
-    }
-
-    /* Subtle stitched border on the cover */
-    .cover::before {
-      content: "";
-      position: absolute;
-      inset: 10px 10px 10px 22px;
-      border: 1px dashed rgba(201, 168, 106, 0.18);
-      border-radius: 4px 8px 8px 4px;
-      pointer-events: none;
     }
 
     /* Spine (left binding) */
     .spine {
       position: absolute;
-      top: -10px;
-      bottom: -10px;
-      left: -14px;
-      width: 18px;
-      border-radius: 6px 0 0 6px;
+      top: -8px;
+      bottom: -8px;
+      left: -12px;
+      width: 14px;
+      border-radius: 4px 0 0 4px;
       background:
         linear-gradient(90deg,
-          var(--leather-hi) 0%,
-          var(--leather-lo) 30%,
-          var(--leather) 55%,
-          var(--leather-lo) 80%,
-          var(--leather-hi) 100%);
+          var(--leather-lo) 0%,
+          #050505 50%,
+          var(--leather) 100%);
       box-shadow:
-        inset 2px 0 3px rgba(0,0,0,0.7),
-        inset -2px 0 4px rgba(0,0,0,0.55);
+        inset 2px 0 3px rgba(0,0,0,0.8),
+        inset -1px 0 2px rgba(0,0,0,0.6);
       z-index: 1;
     }
-
-    .spine::before,
-    .spine::after {
-      content: "";
-      position: absolute;
-      left: 4px;
-      right: 4px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(201,168,106,0.35), transparent);
-    }
-    .spine::before { top: 18%; }
-    .spine::after  { bottom: 18%; }
 
     /* Closed cover that lifts on load to reveal pages */
     .cover-lid {
       position: absolute;
-      inset: -10px -10px -10px 4px;
-      border-radius: 4px 12px 12px 4px;
+      inset: -8px -8px -8px 4px;
+      border-radius: 2px 8px 8px 2px;
       background:
-        radial-gradient(ellipse at 25% 25%, #4a2611 0%, transparent 55%),
         linear-gradient(135deg, var(--leather-hi) 0%, var(--leather) 50%, var(--leather-lo) 100%);
       box-shadow:
         inset -4px -4px 6px rgba(0,0,0,0.6),
@@ -214,7 +180,7 @@
     /* The page stack */
     .page-stack {
       position: absolute;
-      inset: 6px 6px 6px 18px;
+      inset: 4px 4px 4px 14px;
       z-index: 10;
       transform-style: preserve-3d;
     }
@@ -223,15 +189,15 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at 0% 50%, rgba(0,0,0,0.18) 0%, transparent 12%),
-        repeating-linear-gradient(
-          to bottom,
-          rgba(155, 130, 90, 0.04) 0px,
-          rgba(155, 130, 90, 0.04) 2px,
-          transparent 2px,
-          transparent 6px
-        ),
-        linear-gradient(180deg, var(--paper-hi) 0%, var(--paper) 60%, var(--paper-edge) 100%);
+        linear-gradient(90deg,
+          rgba(0,0,0,0.10) 0%,
+          rgba(0,0,0,0.00) 6%,
+          rgba(0,0,0,0.00) 48%,
+          rgba(0,0,0,0.22) 50%,
+          rgba(0,0,0,0.00) 52%,
+          rgba(0,0,0,0.00) 94%,
+          rgba(0,0,0,0.10) 100%),
+        linear-gradient(180deg, var(--paper-hi) 0%, var(--paper) 100%);
       color: var(--ink);
       padding: clamp(1rem, 3.5vw, 2rem) clamp(1.2rem, 4.5vw, 2.6rem) clamp(1.8rem, 4.5vw, 2.6rem);
       border-radius: 0 8px 8px 0;
@@ -255,26 +221,7 @@
       z-index: 2;
     }
 
-    /* Top-right page-corner fold detail */
-    .page::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: clamp(22px, 4vw, 36px);
-      height: clamp(22px, 4vw, 36px);
-      background:
-        linear-gradient(225deg,
-          transparent 47%,
-          rgba(0,0,0,0.12) 48%,
-          var(--paper-edge) 50%,
-          var(--paper-hi) 60%,
-          var(--paper) 100%);
-      box-shadow: -3px 3px 6px -3px rgba(0,0,0,0.25);
-      pointer-events: none;
-      opacity: 0.9;
-      border-bottom-left-radius: 4px;
-    }
+
 
     /* Shading overlay swept over the turning page (sells the 3D bend) */
     .page-shade {
@@ -331,15 +278,11 @@
     /* Page content */
     .page-content {
       flex: 1 1 auto;
-      overflow-y: auto;
+      min-height: 0;
+      overflow: hidden;
       padding-right: 0.4rem;
-      scrollbar-width: thin;
-      scrollbar-color: var(--paper-shadow) transparent;
-    }
-    .page-content::-webkit-scrollbar { width: 8px; }
-    .page-content::-webkit-scrollbar-thumb {
-      background: var(--paper-shadow);
-      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
     }
 
     .page-number {
@@ -360,9 +303,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      background:
-        radial-gradient(ellipse at center, rgba(218, 41, 28, 0.08) 0%, transparent 65%),
-        linear-gradient(180deg, var(--paper-hi) 0%, var(--paper-edge) 100%);
+      background: linear-gradient(180deg, var(--paper-hi) 0%, var(--paper) 100%);
     }
     .page.cover-page .page-content {
       align-items: center;
@@ -371,96 +312,71 @@
       flex-direction: column;
       width: 100%;
       height: 100%;
-      padding: clamp(0.8rem, 3vw, 1.6rem);
-      border: 3px double var(--accent-dark);
-      outline: 1px solid var(--accent-dark);
-      outline-offset: 6px;
+      padding: clamp(1rem, 4vw, 2.2rem);
       overflow: hidden;
     }
-    .cover-eyebrow {
-      font-family: "Special Elite", "Roboto Condensed", monospace;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      font-size: clamp(0.7rem, 1.6vw, 0.9rem);
-      color: var(--accent-dark);
-      margin-bottom: 0.6rem;
-    }
     .cover-title {
-      font-family: "Abril Fatface", "Cormorant Garamond", serif;
-      font-weight: 400;
-      font-size: clamp(2.2rem, 8vw, 4.4rem);
-      line-height: 1;
-      letter-spacing: 0.02em;
+      font-family: var(--ff-serif);
+      font-weight: 600;
+      font-size: clamp(1.8rem, 5.2vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: 0.04em;
       color: var(--ink);
-      margin: 0 0 0.3rem;
-      text-shadow: 2px 2px 0 rgba(218, 41, 28, 0.18);
-    }
-    .cover-rule {
-      width: 55%;
-      height: 0;
-      border-top: 1px solid var(--ink-soft);
-      border-bottom: 1px solid var(--ink-soft);
-      padding-top: 3px;
-      margin: 0.8rem auto;
-      opacity: 0.7;
-    }
-    .cover-ornament {
-      font-family: "Abril Fatface", serif;
-      color: var(--accent);
-      font-size: 1.4rem;
-      letter-spacing: 0.6em;
-      margin: 0.2rem 0 0.6rem;
-      padding-left: 0.3em;
+      margin: 0;
     }
     .cover-sub {
-      font-family: "Special Elite", "Roboto Condensed", monospace;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+      margin-top: 1.2rem;
+      font-family: var(--ff-serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(0.85rem, 1.7vw, 1.05rem);
+      letter-spacing: 0.04em;
       color: var(--ink-soft);
     }
-    .cover-edition {
-      margin-top: 1.2rem;
-      font-family: "Special Elite", "Roboto Condensed", monospace;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+    .cover-mark {
+      margin-top: 1.4rem;
       font-size: 0.7rem;
+      letter-spacing: 0.5em;
       color: var(--ink-soft);
+      opacity: 0.5;
     }
 
     /* TOC */
     .toc-title,
     .song-title {
-      font-family: "Abril Fatface", "Cormorant Garamond", serif;
-      font-weight: 400;
-      font-size: clamp(1.7rem, 4.4vw, 2.4rem);
+      font-family: var(--ff-serif);
+      font-weight: 600;
+      font-size: clamp(1.1rem, 2.9vw, 1.55rem);
       color: var(--ink);
-      margin: 0 0 0.2rem;
+      margin: 0 0 0.8rem;
       text-align: center;
       letter-spacing: 0.02em;
     }
+    .toc-title {
+      font-variant: small-caps;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      font-size: clamp(0.95rem, 2.3vw, 1.2rem);
+      margin-bottom: 1.4rem;
+      color: var(--ink-soft);
+    }
     .section-rule {
-      width: 40%;
-      height: 0;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      padding-top: 2px;
-      margin: 0.4rem auto 1.2rem;
+      display: none;
     }
     .toc-list {
       list-style: none;
       margin: 0;
-      padding: 0;
-      font-family: "Special Elite", "Roboto Condensed", monospace;
-      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      padding: 0 clamp(0.5rem, 4vw, 2.5rem);
+      font-family: var(--ff-serif);
+      font-size: clamp(0.75rem, 1.4vw, 0.85rem);
       color: var(--ink);
     }
     .toc-list li {
       display: flex;
       align-items: baseline;
-      gap: 0.4rem;
-      padding: 0.35rem 0;
-      border-bottom: 1px dotted rgba(74, 56, 38, 0.4);
+      gap: 0.6rem;
+      padding: 0.32rem 0;
+      border: 0;
     }
     .toc-list a {
       color: var(--ink);
@@ -468,6 +384,7 @@
       transition: color 0.2s ease;
       flex: 0 0 auto;
       font-weight: 400;
+      font-style: italic;
     }
     .toc-list a:hover,
     .toc-list a:focus {
@@ -476,25 +393,59 @@
     }
     .toc-leader {
       flex: 1 1 auto;
-      border-bottom: 1px dotted rgba(74, 56, 38, 0.55);
-      transform: translateY(-3px);
-      margin: 0 0.3rem;
+      margin: 0 0.4rem;
+      border: 0;
     }
     .toc-pagenum {
       flex: 0 0 auto;
-      font-family: "Special Elite", "Roboto Condensed", monospace;
+      font-family: var(--ff-serif);
       font-size: 0.95em;
       color: var(--ink-soft);
+      font-variant-numeric: oldstyle-nums;
     }
 
     /* Song page */
+    .spread {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.5rem, 5vw, 3.5rem);
+    }
+    .spread-col {
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .spread-col .song-title {
+      flex: 0 0 auto;
+      font-size: clamp(1rem, 2.15vw, 1.4rem);
+      margin: 0 0 0.9rem;
+    }
+    .spread-col .section-rule {
+      display: none;
+    }
+    .spread-col .song-cont {
+      flex: 0 0 auto;
+      font-family: var(--ff-serif);
+      font-style: italic;
+      font-size: clamp(0.6rem, 1.05vw, 0.7rem);
+      color: var(--ink-soft);
+      text-align: center;
+      margin: 0 0 0.6rem;
+      letter-spacing: 0.04em;
+    }
     .lyrics {
       margin: 0;
       white-space: pre-wrap;
       color: var(--ink);
-      font-size: clamp(0.92rem, 1.95vw, 1.05rem);
-      line-height: 1.55;
-      font-family: "Special Elite", "Courier New", monospace;
+      font-size: clamp(0.62rem, 1.05vw, 0.72rem);
+      line-height: 1.5;
+      font-family: var(--ff-serif);
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: hidden;
     }
 
     .loading-page {
@@ -559,9 +510,18 @@
       text-transform: uppercase;
     }
 
-    /* Responsive */
-    @media (max-width: 991px) {
-      .book { transform: rotateX(10deg) rotateZ(-1.5deg); }
+    .page {
+      padding: clamp(1rem, 3vw, 1.8rem) clamp(1.4rem, 4vw, 2.6rem) clamp(1.6rem, 3.5vw, 2.4rem);
+    }
+    .page-content > .song-title,
+    .page-content > .section-rule,
+    .page-content > .toc-title { flex: 0 0 auto; }
+    @media (max-width: 700px) {
+      .book { aspect-ratio: 3 / 4; }
+      .spread {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+      }
     }
     @media (max-width: 600px) {
       body { padding: 0.6rem 0.5rem 1rem; }
@@ -569,12 +529,9 @@
       .book {
         aspect-ratio: 3 / 4.2;
         max-height: calc(100vh - 170px);
-        transform: rotateX(6deg) rotateZ(-0.6deg);
       }
-      .book:hover,
-      .book:focus-within { transform: rotateX(2deg) rotateZ(0deg); }
-      .spine { width: 12px; left: -10px; }
-      .page-stack { inset: 4px 4px 4px 12px; }
+      .spine { width: 10px; left: -8px; }
+      .page-stack { inset: 3px 3px 3px 10px; }
       .nav button { padding: 0.45rem 0.7rem; font-size: 0.7rem; }
       .nav { gap: 0.5rem; }
       .nav .indicator { min-width: 5.5rem; font-size: 0.7rem; }
@@ -638,6 +595,7 @@
       { title: "Greasy Sun",      file: "Greasy_Sun.txt" },
       { title: "Halifax",         file: "Halifax.txt" },
       { title: "Sagebrush",       file: "Sagebrush.txt" },
+      { title: "Snapdragons",     file: "Snapdragons.txt" },
       { title: "Sunrise",         file: "Sunrise.txt" },
       { title: "Take Two",        file: "Take_Two.txt" },
       { title: "Time Trial",      file: "Time_Trial.txt" },
@@ -674,27 +632,24 @@
       const content = document.createElement("div");
       content.className = "page-content";
       content.innerHTML = `
-        <div class="cover-eyebrow">Marv Moses Is</div>
-        <h2 class="cover-title">Jellohead</h2>
-        <div class="cover-rule"></div>
-        <div class="cover-ornament" aria-hidden="true">&#10022; &#10022; &#10022;</div>
+        <h2 class="cover-title">Marv Moses</h2>
         <div class="cover-sub">Songbook</div>
-        <div class="cover-edition">Deluxe Edition</div>
+        <div class="cover-mark" aria-hidden="true">·</div>
       `;
       page.appendChild(content);
       return page;
     }
 
-    function buildTocPage(songEntries) {
+    function buildTocPage(songEntries, songStartPageNums) {
       const page = createPage("toc");
       const items = songEntries.map((entry, idx) => {
-        const songPageIndex = 2 + idx;       // 0=cover, 1=toc
-        const displayPageNum = songPageIndex + 1;
+        const pageNum1 = songStartPageNums ? songStartPageNums[idx] : (3 + idx);
+        const pageIndex0 = pageNum1 - 1;
         return `
           <li>
-            <a href="#" data-page-index="${songPageIndex}">${entry.title}</a>
+            <a href="#" data-page-index="${pageIndex0}">${entry.title}</a>
             <span class="toc-leader" aria-hidden="true"></span>
-            <span class="toc-pagenum">${displayPageNum}</span>
+            <span class="toc-pagenum">${pageNum1}</span>
           </li>
         `;
       }).join("");
@@ -715,32 +670,119 @@
       return page;
     }
 
-    function buildSongPage(title, lyrics, pageNum) {
+    // Build the DOM shell for one spread of a song.
+    // First spread shows the title; continuation spreads show "Title (cont.)".
+    function buildSongSpread(title, isContinuation) {
       const page = createPage("song");
       const content = document.createElement("div");
       content.className = "page-content";
 
-      const heading = document.createElement("h2");
-      heading.className = "song-title";
-      heading.textContent = title;
+      const spread = document.createElement("div");
+      spread.className = "spread";
 
-      const rule = document.createElement("div");
-      rule.className = "section-rule";
+      const leftCol = document.createElement("div");
+      leftCol.className = "spread-col spread-col-left";
 
-      const pre = document.createElement("pre");
-      pre.className = "lyrics";
-      pre.textContent = lyrics;
+      if (!isContinuation) {
+        const heading = document.createElement("h2");
+        heading.className = "song-title";
+        heading.textContent = title;
+        const rule = document.createElement("div");
+        rule.className = "section-rule";
+        leftCol.appendChild(heading);
+        leftCol.appendChild(rule);
+      } else {
+        const cont = document.createElement("div");
+        cont.className = "song-cont";
+        cont.textContent = title + " — cont.";
+        leftCol.appendChild(cont);
+      }
 
-      content.appendChild(heading);
-      content.appendChild(rule);
-      content.appendChild(pre);
+      const leftPre = document.createElement("pre");
+      leftPre.className = "lyrics";
+      leftCol.appendChild(leftPre);
+
+      const rightCol = document.createElement("div");
+      rightCol.className = "spread-col spread-col-right";
+      const rightPre = document.createElement("pre");
+      rightPre.className = "lyrics";
+      rightCol.appendChild(rightPre);
+
+      spread.appendChild(leftCol);
+      spread.appendChild(rightCol);
+      content.appendChild(spread);
       page.appendChild(content);
 
       const num = document.createElement("div");
       num.className = "page-number";
-      num.textContent = pageNum;
+      num.textContent = "";
       page.appendChild(num);
       return page;
+    }
+
+    // Greedily fill a <pre> with lines until it would overflow its column.
+    // Returns the next line index to consume.
+    function fillPre(pre, lines, startIdx) {
+      let i = startIdx;
+      pre.textContent = "";
+      let placedAny = false;
+      // Skip leading blank lines at the start of a column
+      while (i < lines.length && lines[i].trim() === "") i++;
+      while (i < lines.length) {
+        const prev = pre.textContent;
+        pre.textContent = (prev ? prev + "\n" : "") + lines[i];
+        if (pre.scrollHeight > pre.clientHeight + 1) {
+          if (!placedAny) {
+            // Force one line so we always make progress
+            i++;
+            placedAny = true;
+            continue;
+          }
+          // Greedy fill — verses may split across columns/spreads.
+          pre.textContent = prev;
+          break;
+        }
+        i++;
+        placedAny = true;
+      }
+      pre.textContent = pre.textContent.replace(/\s+$/, "");
+      return i;
+    }
+
+    // Paginate one song into one or more spread pages.
+    // Spreads must be appended into the live page-stack so layout is computed.
+    function paginateSongInto(title, lyrics) {
+      const normalized = lyrics.replace(/\r\n/g, "\n").replace(/\n{3,}/g, "\n\n");
+      const lines = normalized.split("\n");
+      const spreads = [];
+      let idx = 0;
+      let isCont = false;
+      let safety = 0;
+
+      while (idx < lines.length && safety++ < 20) {
+        const page = buildSongSpread(title, isCont);
+        stack.appendChild(page);
+
+        const leftPre  = page.querySelector(".spread-col-left  .lyrics");
+        const rightPre = page.querySelector(".spread-col-right .lyrics");
+
+        idx = fillPre(leftPre, lines, idx);
+        if (idx < lines.length) {
+          idx = fillPre(rightPre, lines, idx);
+        }
+
+        spreads.push(page);
+        isCont = true;
+      }
+
+      if (spreads.length === 0) {
+        // Empty lyrics — still emit a single page so the song exists.
+        const page = buildSongSpread(title, false);
+        stack.appendChild(page);
+        spreads.push(page);
+      }
+
+      return spreads;
     }
 
     function buildErrorPage(title, pageNum) {
@@ -882,17 +924,52 @@
       stack.textContent = "";
       pages = [];
 
-      // Pages
-      pages.push(buildCoverPage());
-      pages.push(buildTocPage(loaded));
-      loaded.forEach((entry, idx) => {
-        const pageNum = idx + 3;
-        pages.push(entry.ok
-          ? buildSongPage(entry.title, entry.lyrics, pageNum)
-          : buildErrorPage(entry.title, pageNum));
+      // 1. Cover
+      const coverPage = buildCoverPage();
+      stack.appendChild(coverPage);
+      pages.push(coverPage);
+
+      // 2. TOC placeholder — paginating songs needs the stack to have layout,
+      //    and we want the TOC to sit at index 1. We'll swap in the real TOC
+      //    once song page numbers are known.
+      const tocPlaceholder = createPage("toc");
+      stack.appendChild(tocPlaceholder);
+      pages.push(tocPlaceholder);
+
+      // Wait for fonts so measurement is accurate
+      if (document.fonts && document.fonts.ready) {
+        try { await document.fonts.ready; } catch (_) {}
+      }
+
+      // 3. Paginate each song, recording its starting 1-based page number
+      const songStartPageNums = [];
+      loaded.forEach((entry) => {
+        const startPageNum = pages.length + 1;
+        songStartPageNums.push(startPageNum);
+        const spreads = entry.ok
+          ? paginateSongInto(entry.title, entry.lyrics)
+          : (() => {
+              const p = buildErrorPage(entry.title, "");
+              stack.appendChild(p);
+              return [p];
+            })();
+        for (const sp of spreads) pages.push(sp);
       });
 
-      pages.forEach((p) => stack.appendChild(p));
+      // 4. Replace TOC placeholder with the real TOC
+      const tocPage = buildTocPage(loaded, songStartPageNums);
+      stack.replaceChild(tocPage, tocPlaceholder);
+      pages[1] = tocPage;
+
+      // 5. Renumber every page's footer
+      pages.forEach((p, i) => {
+        const num = p.querySelector(".page-number");
+        if (!num) return;
+        if (p.classList.contains("cover-page")) { num.textContent = ""; return; }
+        if (i === 1) { num.textContent = "ii"; return; }
+        num.textContent = String(i + 1);
+      });
+
       pages[0].classList.add("active");
       currentIndex = 0;
       updateIndicator();

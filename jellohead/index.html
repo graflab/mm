@@ -1,137 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Marv Moses Is Jellohead</title>
+  <meta name="description" content="Marv Moses is Jellohead. Music, lyrics, tour dates and contact.">
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/site.css">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="/assets/fontawesome/all.min.css" />
-
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Roboto Condensed", sans-serif;
-      display: flex;
-      justify-content: center;
-      background: #000;
-      text-align: center;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1rem 5rem;
-      margin-top: 8vh;
-    }
-
-    .logo-link {
-      display: inline-block;
-      margin-bottom: 1.5rem;
-      transition: transform 0.3s ease, filter 0.3s ease;
-    }
-
-    .logo-link:hover {
-      transform: scale(1.06);
-      filter: drop-shadow(0 0 14px rgba(218, 41, 28, 0.5));
-    }
-
-    .logo {
-      width: 35vw;
-      max-width: 200px;
-      display: block;
-    }
-
-    .nav-button {
-      display: inline-block;
-      width: 140px;
-      padding: 0.4em 0;
-      margin: 0.2rem 0;
-      font-size: 0.95rem;
-      font-weight: 700;
-      font-family: "Roboto Condensed", sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #da291c;
-      background-color: transparent;
-      border: 1.5px solid #da291c;
-      border-radius: 0.4em;
-      text-decoration: none;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .nav-button:hover {
-      background-color: #da291c;
-      color: #000;
-      transform: scale(1.04);
-    }
-
-    .footer {
-      position: fixed;
-      bottom: 20px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      gap: 0.6rem;
-      z-index: 1000;
-    }
-
-    .social-icon {
-      color: #da291c;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      border: 1.5px solid #da291c;
-      font-size: 1.2rem;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .social-icon:hover {
-      background-color: #da291c;
-      color: #000;
-      transform: scale(1.1);
-    }
-
-    @media (max-width: 600px) {
-      .logo {
-        width: 50vw;
-      }
-      .nav-button {
-        width: 180px;
-        font-size: 1.1rem;
-        padding: 0.5em 0;
-      }
-      .container {
-        margin-top: 5vh;
-      }
-    }
-  </style>
 </head>
+<body class="home">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <h1 class="site-name">Marv Moses</h1>
+    <p class="site-subtitle">is jellohead</p>
+  </header>
 
-<body>
-  <div class="container">
-    <a href="/" class="logo-link" aria-label="Home">
-      <img src="logo.svg" alt="Marv Moses" class="logo">
-    </a>
-    <a href="/jellohead/tour" class="nav-button">Tour</a>
-    <a href="/jellohead/songs" class="nav-button">Songbook</a>
-    <a href="/jellohead/links" class="nav-button">Links</a>
-    <a href="/jellohead/store" class="nav-button">Store</a>
-  </div>
-
-  <div class="footer">
-    <a href="https://marvmoses.bandcamp.com" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Bandcamp"><i class="fab fa-bandcamp"></i></a>
-    <a href="https://instagram.com/marvmoses" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-    <a href="mailto:contact@jellohead.com" class="social-icon" aria-label="Contact"><i class="fas fa-envelope"></i></a>
-  </div>
+  <main id="main" class="home-main">
+    <figure class="portrait">
+      <img src="/assets/images/marv-moses-portrait.webp" alt="A painted portrait of Marv Moses propped on a wooden table" width="983" height="1400" fetchpriority="high">
+    </figure>
+  </main>
+  <footer class="site-footer">
+    <nav class="site-nav" aria-label="Main navigation">
+  <a href="/" aria-current="page">Home</a>
+  <a href="/jellohead/tour/">Tour</a>
+  <a href="/jellohead/songs/">Songbook</a>
+  <a href="/jellohead/store/">Store</a>
+  <a href="/jellohead/links/">Contact</a>
+</nav>
+    <div class="social-links"><a href="https://marvmoses.bandcamp.com">Bandcamp</a><a href="https://instagram.com/marvmoses">Instagram</a><a href="mailto:contact@jellohead.com">Email</a></div>
+  </footer>
 </body>
 </html>

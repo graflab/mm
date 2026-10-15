@@ -1,997 +1,661 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Songbook - Marv Moses Is Jellohead</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:wght@400;500;600&family=Roboto+Condensed:wght@300;400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Special+Elite&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-deep:        #000;
-      --bg-warm:        #0a0a0a;
-      --ink:            #1d1a16;
-      --ink-soft:       #4a443c;
-      --muted:          #8a8378;
-      --paper:          #f3efe4;
-      --paper-hi:       #f7f3e9;
-      --paper-edge:     #e6e0d0;
-      --paper-shadow:   #b8b0a0;
-      --leather:        #1a1a1a;
-      --leather-hi:     #2a2a2a;
-      --leather-lo:     #0a0a0a;
-      --gold:           #b8a880;
-      --accent:         #da291c;
-      --accent-dark:    #7a1410;
-      --line:           #c9c0ad;
-      --ff-serif:       "minion-pro", "Source Serif 4", "Source Serif Pro", "EB Garamond", Georgia, serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; }
-
-    html, body { height: 100%; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(ellipse at 50% 0%, #141414 0%, var(--bg-warm) 40%, var(--bg-deep) 100%);
-      color: #d8cbb4;
-      font-family: "Roboto Condensed", "Cormorant Garamond", serif;
-      padding: 1rem 1rem 1.5rem;
-      overflow-x: hidden;
-    }
-
-    .wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 0.4rem;
-    }
-
-    .logo-link {
-      display: inline-block;
-      margin-bottom: 0.2rem;
-      transition: transform 0.3s ease, filter 0.3s ease;
-    }
-
-    .logo-link:hover {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 14px rgba(218, 41, 28, 0.45));
-    }
-
-    .logo-link img {
-      width: 18vw;
-      max-width: 72px;
-      display: block;
-    }
-
-    h1.page-title {
-      margin: 0.1rem 0 0;
-      font-family: "Abril Fatface", "Cormorant Garamond", serif;
-      font-size: clamp(1.3rem, 2.8vw, 1.7rem);
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      color: #e3d8c6;
-    }
-
-    /* ---------- Stage / Book ---------- */
-
-    .scene {
-      perspective: 2400px;
-      perspective-origin: 50% 50%;
-      padding: 0.5rem 0 0.2rem;
-    }
-
-    .book-shadow {
-      position: relative;
-      margin: 0 auto;
-      width: min(98%, 1040px);
-      filter: drop-shadow(0 24px 32px rgba(0,0,0,0.55));
-    }
-
-    /* Book holder — lays flat, no tilt */
-    .book {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      max-height: calc(100vh - 200px);
-      transform-style: preserve-3d;
-    }
-
-    /* Outer cover (rendered behind pages) — Moleskine-style matte black */
-    .cover {
-      position: absolute;
-      inset: -8px -8px -8px -12px;
-      border-radius: 4px 8px 8px 4px;
-      background:
-        linear-gradient(160deg, var(--leather-hi) 0%, var(--leather) 50%, var(--leather-lo) 100%);
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.03),
-        inset 0 -2px 4px rgba(0,0,0,0.6),
-        0 2px 0 0 rgba(0,0,0,0.6);
-      z-index: 0;
-    }
-
-    /* Spine (left binding) */
-    .spine {
-      position: absolute;
-      top: -8px;
-      bottom: -8px;
-      left: -12px;
-      width: 14px;
-      border-radius: 4px 0 0 4px;
-      background:
-        linear-gradient(90deg,
-          var(--leather-lo) 0%,
-          #050505 50%,
-          var(--leather) 100%);
-      box-shadow:
-        inset 2px 0 3px rgba(0,0,0,0.8),
-        inset -1px 0 2px rgba(0,0,0,0.6);
-      z-index: 1;
-    }
-
-    /* Closed cover that lifts on load to reveal pages */
-    .cover-lid {
-      position: absolute;
-      inset: -8px -8px -8px 4px;
-      border-radius: 2px 8px 8px 2px;
-      background:
-        linear-gradient(135deg, var(--leather-hi) 0%, var(--leather) 50%, var(--leather-lo) 100%);
-      box-shadow:
-        inset -4px -4px 6px rgba(0,0,0,0.6),
-        inset 4px 4px 6px rgba(99,86,72,0.4),
-        0 6px 14px rgba(0,0,0,0.4);
-      transform-origin: left center;
-      transform: rotateY(0deg);
-      transition: transform 1400ms cubic-bezier(.7,.04,.34,1), opacity 200ms linear 1300ms;
-      z-index: 50;
-      backface-visibility: hidden;
-      pointer-events: none;
-    }
-
-    .cover-lid::after {
-      /* Embossed title on the closed cover */
-      content: "SONGBOOK";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: "Abril Fatface", "Cormorant Garamond", serif;
-      font-size: clamp(1.6rem, 5vw, 2.8rem);
-      letter-spacing: 0.25em;
-      color: var(--gold);
-      text-shadow:
-        -1px -1px 0 rgba(0,0,0,0.6),
-         1px  1px 0 rgba(255,220,150,0.15);
-      opacity: 0.85;
-    }
-
-    .book.opened .cover-lid {
-      transform: rotateY(-168deg);
-      opacity: 0;
-    }
-
-    /* The page stack */
-    .page-stack {
-      position: absolute;
-      inset: 4px 4px 4px 14px;
-      z-index: 10;
-      transform-style: preserve-3d;
-    }
-
-    .page {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(90deg,
-          rgba(0,0,0,0.10) 0%,
-          rgba(0,0,0,0.00) 6%,
-          rgba(0,0,0,0.00) 48%,
-          rgba(0,0,0,0.22) 50%,
-          rgba(0,0,0,0.00) 52%,
-          rgba(0,0,0,0.00) 94%,
-          rgba(0,0,0,0.10) 100%),
-        linear-gradient(180deg, var(--paper-hi) 0%, var(--paper) 100%);
-      color: var(--ink);
-      padding: clamp(1rem, 3.5vw, 2rem) clamp(1.2rem, 4.5vw, 2.6rem) clamp(1.8rem, 4.5vw, 2.6rem);
-      border-radius: 0 8px 8px 0;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transform-origin: left center;
-      backface-visibility: hidden;
-      box-shadow:
-        inset 12px 0 18px -10px rgba(0,0,0,0.45),
-        inset -2px 0 4px rgba(0,0,0,0.08);
-      opacity: 0;
-      pointer-events: none;
-      transform: rotateY(0deg);
-      will-change: transform, opacity;
-    }
-
-    .page.active {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 2;
-    }
-
-
-
-    /* Shading overlay swept over the turning page (sells the 3D bend) */
-    .page-shade {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      border-radius: inherit;
-      background: linear-gradient(90deg,
-        rgba(0,0,0,0.45) 0%,
-        rgba(0,0,0,0.15) 20%,
-        rgba(0,0,0,0.0)  50%,
-        rgba(255,255,255,0.12) 80%,
-        rgba(255,255,255,0.25) 100%);
-      opacity: 0;
-    }
-
-    .page.flipping-forward {
-      opacity: 1;
-      z-index: 3;
-      animation: flipForward 850ms cubic-bezier(.55,.05,.35,1) forwards;
-    }
-    .page.flipping-forward .page-shade {
-      animation: shadeForward 850ms cubic-bezier(.55,.05,.35,1) forwards;
-    }
-
-    .page.flipping-back {
-      opacity: 1;
-      z-index: 3;
-      animation: flipBack 850ms cubic-bezier(.55,.05,.35,1) forwards;
-    }
-    .page.flipping-back .page-shade {
-      animation: shadeBack 850ms cubic-bezier(.55,.05,.35,1) forwards;
-    }
-
-    @keyframes flipForward {
-      0%   { transform: rotateY(0deg); }
-      100% { transform: rotateY(-178deg); }
-    }
-    @keyframes flipBack {
-      0%   { transform: rotateY(-178deg); }
-      100% { transform: rotateY(0deg); }
-    }
-    @keyframes shadeForward {
-      0%   { opacity: 0; }
-      45%  { opacity: 0.9; }
-      100% { opacity: 0; }
-    }
-    @keyframes shadeBack {
-      0%   { opacity: 0; }
-      45%  { opacity: 0.9; }
-      100% { opacity: 0; }
-    }
-
-    /* Page content */
-    .page-content {
-      flex: 1 1 auto;
-      min-height: 0;
-      overflow: hidden;
-      padding-right: 0.4rem;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .page-number {
-      position: absolute;
-      bottom: 0.7rem;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-family: "Special Elite", "Roboto Condensed", monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    /* Cover page (inside) */
-    .page.cover-page {
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: linear-gradient(180deg, var(--paper-hi) 0%, var(--paper) 100%);
-    }
-    .page.cover-page .page-content {
-      align-items: center;
-      justify-content: center;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      height: 100%;
-      padding: clamp(1rem, 4vw, 2.2rem);
-      overflow: hidden;
-    }
-    .cover-title {
-      font-family: var(--ff-serif);
-      font-weight: 600;
-      font-size: clamp(1.8rem, 5.2vw, 3rem);
-      line-height: 1.05;
-      letter-spacing: 0.04em;
-      color: var(--ink);
-      margin: 0;
-    }
-    .cover-sub {
-      margin-top: 1.2rem;
-      font-family: var(--ff-serif);
-      font-style: italic;
-      font-weight: 400;
-      font-size: clamp(0.85rem, 1.7vw, 1.05rem);
-      letter-spacing: 0.04em;
-      color: var(--ink-soft);
-    }
-    .cover-mark {
-      margin-top: 1.4rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.5em;
-      color: var(--ink-soft);
-      opacity: 0.5;
-    }
-
-    /* TOC */
-    .toc-title,
-    .song-title {
-      font-family: var(--ff-serif);
-      font-weight: 600;
-      font-size: clamp(1.1rem, 2.9vw, 1.55rem);
-      color: var(--ink);
-      margin: 0 0 0.8rem;
-      text-align: center;
-      letter-spacing: 0.02em;
-    }
-    .toc-title {
-      font-variant: small-caps;
-      font-weight: 500;
-      letter-spacing: 0.25em;
-      font-size: clamp(0.95rem, 2.3vw, 1.2rem);
-      margin-bottom: 1.4rem;
-      color: var(--ink-soft);
-    }
-    .section-rule {
-      display: none;
-    }
-    .toc-list {
-      list-style: none;
-      margin: 0;
-      padding: 0 clamp(0.5rem, 4vw, 2.5rem);
-      font-family: var(--ff-serif);
-      font-size: clamp(0.75rem, 1.4vw, 0.85rem);
-      color: var(--ink);
-    }
-    .toc-list li {
-      display: flex;
-      align-items: baseline;
-      gap: 0.6rem;
-      padding: 0.32rem 0;
-      border: 0;
-    }
-    .toc-list a {
-      color: var(--ink);
-      text-decoration: none;
-      transition: color 0.2s ease;
-      flex: 0 0 auto;
-      font-weight: 400;
-      font-style: italic;
-    }
-    .toc-list a:hover,
-    .toc-list a:focus {
-      color: var(--accent);
-      outline: none;
-    }
-    .toc-leader {
-      flex: 1 1 auto;
-      margin: 0 0.4rem;
-      border: 0;
-    }
-    .toc-pagenum {
-      flex: 0 0 auto;
-      font-family: var(--ff-serif);
-      font-size: 0.95em;
-      color: var(--ink-soft);
-      font-variant-numeric: oldstyle-nums;
-    }
-
-    /* Song page */
-    .spread {
-      flex: 1 1 auto;
-      min-height: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(1.5rem, 5vw, 3.5rem);
-    }
-    .spread-col {
-      min-height: 0;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    .spread-col .song-title {
-      flex: 0 0 auto;
-      font-size: clamp(1rem, 2.15vw, 1.4rem);
-      margin: 0 0 0.9rem;
-    }
-    .spread-col .section-rule {
-      display: none;
-    }
-    .spread-col .song-cont {
-      flex: 0 0 auto;
-      font-family: var(--ff-serif);
-      font-style: italic;
-      font-size: clamp(0.6rem, 1.05vw, 0.7rem);
-      color: var(--ink-soft);
-      text-align: center;
-      margin: 0 0 0.6rem;
-      letter-spacing: 0.04em;
-    }
-    .lyrics {
-      margin: 0;
-      white-space: pre-wrap;
-      color: var(--ink);
-      font-size: clamp(0.62rem, 1.05vw, 0.72rem);
-      line-height: 1.5;
-      font-family: var(--ff-serif);
-      flex: 1 1 auto;
-      min-height: 0;
-      overflow: hidden;
-    }
-
-    .loading-page {
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: var(--ink-soft);
-      font-family: "Special Elite", "Roboto Condensed", monospace;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    /* Navigation */
-    .nav {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      margin: 1rem auto 0;
-      max-width: 760px;
-    }
-    .nav button {
-      background: rgba(241, 228, 201, 0.06);
-      color: #e3d8c6;
-      border: 1px solid rgba(241, 228, 201, 0.32);
-      font-family: "Roboto Condensed", "Special Elite", monospace;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
-      padding: 0.55rem 1.1rem;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-    }
-    .nav button:hover:not(:disabled) {
-      background: rgba(218, 41, 28, 0.22);
-      border-color: var(--accent);
-      color: #fff;
-      transform: translateY(-1px);
-    }
-    .nav button:disabled {
-      opacity: 0.32;
-      cursor: not-allowed;
-    }
-    .nav .indicator {
-      font-family: "Special Elite", "Roboto Condensed", monospace;
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #c9b993;
-      min-width: 7rem;
-      text-align: center;
-    }
-    .hint {
-      text-align: center;
-      margin: 0.5rem 0 0;
-      color: #7a6a52;
-      font-family: "Special Elite", "Roboto Condensed", monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-
-    .page {
-      padding: clamp(1rem, 3vw, 1.8rem) clamp(1.4rem, 4vw, 2.6rem) clamp(1.6rem, 3.5vw, 2.4rem);
-    }
-    .page-content > .song-title,
-    .page-content > .section-rule,
-    .page-content > .toc-title { flex: 0 0 auto; }
-    @media (max-width: 700px) {
-      .book { aspect-ratio: 3 / 4; }
-      .spread {
-        grid-template-columns: 1fr;
-        gap: 0.6rem;
-      }
-    }
-    @media (max-width: 600px) {
-      body { padding: 0.6rem 0.5rem 1rem; }
-      .logo-link img { width: 22vw; max-width: 64px; }
-      .book {
-        aspect-ratio: 3 / 4.2;
-        max-height: calc(100vh - 170px);
-      }
-      .spine { width: 10px; left: -8px; }
-      .page-stack { inset: 3px 3px 3px 10px; }
-      .nav button { padding: 0.45rem 0.7rem; font-size: 0.7rem; }
-      .nav { gap: 0.5rem; }
-      .nav .indicator { min-width: 5.5rem; font-size: 0.7rem; }
-      .page.flipping-forward,
-      .page.flipping-back { animation-duration: 700ms; }
-      .page.flipping-forward .page-shade,
-      .page.flipping-back .page-shade { animation-duration: 700ms; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .book,
-      .cover-lid,
-      .page,
-      .page.flipping-forward,
-      .page.flipping-back,
-      .page-shade {
-        animation: none !important;
-        transition: opacity 0.2s ease !important;
-        transform: none !important;
-      }
-      .book.opened .cover-lid { opacity: 0; }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Songbook — Marv Moses</title>
+  <meta name="description" content="The Marv Moses songbook. Find a song and read the complete lyrics.">
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/site.css">
+  <script src="/assets/songbook.js" defer></script>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <a href="/jellohead" class="logo-link" aria-label="Back to home">
-        <img src="/jellohead/logo.svg" alt="Marv Moses">
-      </a>
-      <h1 class="page-title"></h1>
-    </header>
-
-    <div class="scene">
-      <div class="book-shadow">
-        <div class="book" id="book" aria-live="polite">
-          <div class="cover" aria-hidden="true"></div>
-          <div class="spine" aria-hidden="true"></div>
-          <div class="page-stack" id="page-stack">
-            <div class="page loading-page active" id="loading-page">
-              <div>Loading songbook…</div>
-            </div>
-          </div>
-          <div class="cover-lid" aria-hidden="true"></div>
-        </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <p class="site-name"><a href="/">Marv Moses</a></p>
+    <p class="site-subtitle">is jellohead</p>
+  </header>
+  <nav class="site-nav" aria-label="Main navigation">
+  <a href="/">Home</a>
+  <a href="/jellohead/tour/">Tour</a>
+  <a href="/jellohead/songs/" aria-current="page">Songbook</a>
+  <a href="/jellohead/store/">Store</a>
+  <a href="/jellohead/links/">Contact</a>
+</nav>
+  <main id="main" class="page-main">
+    <h1 class="page-heading">Songbook</h1>
+    <p class="intro">Pick a song to read the lyrics.</p>
+    <div class="search-tools" hidden>
+      <label for="song-search">Find a song</label>
+      <div class="search-field">
+        <input id="song-search" type="search" placeholder="Search by title…" autocomplete="off" aria-controls="song-list">
+        <button id="clear-search" class="text-button" type="button" hidden>Clear</button>
       </div>
+      <p id="song-count" class="song-count" role="status" aria-live="polite"></p>
     </div>
+    <div id="song-list">
+<!-- SONGS START -->
+      <details class="song" id="a-fire-inside" name="songs">
+        <summary><span class="song-number" aria-hidden="true">01</span><h2 class="song-title">A Fire Inside</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">I was trapping and selling
+The fire inside
+When she mentioned that I didn&#x27;t have
+So much to hide
+And if the winter that she fears is such a terrible ride
+Then hold on&#32;
+And hunker down
+And let your evenings slide
 
-    <nav class="nav" aria-label="Songbook navigation">
-      <button type="button" id="prev-btn" aria-label="Previous page" disabled>&lsaquo; Prev</button>
-      <span class="indicator" id="indicator">— / —</span>
-      <button type="button" id="next-btn" aria-label="Next page" disabled>Next &rsaquo;</button>
-    </nav>
-    <p class="hint">Use the buttons or &larr; &rarr; keys to turn the pages</p>
-  </div>
+Remeber that thing
+You wanted before?
+It&#x27;s not comin back
+If you can&#x27;t see it no more
+Take her word for what it&#x27;s worth&#32;
+And get off the floor
+Get your strength&#32;
+For to settle the score
 
-  <script>
-    const songs = [
-      { title: "A Fire Inside",   file: "A_Fire_Inside.txt" },
-      { title: "Come Back Down",  file: "Come_Back_Down.txt" },
-      { title: "Greasy Sun",      file: "Greasy_Sun.txt" },
-      { title: "Halifax",         file: "Halifax.txt" },
-      { title: "Sagebrush",       file: "Sagebrush.txt" },
-      { title: "Say I Can Stay",  file: "Say_I_Can_Stay.txt" },
-      { title: "Snapdragons",     file: "Snapdragons.txt" },
-      { title: "Sunrise",         file: "Sunrise.txt" },
-      { title: "Take Two",        file: "Take_Two.txt" },
-      { title: "Time Trial",      file: "Time_Trial.txt" },
-      { title: "Tired Twin",      file: "Tired_Twin.txt" },
-      { title: "Well Dad",        file: "Well_Dad.txt" },
-      { title: "Your Eyes Were Glassy But They Were Windows",       file: "Your_Eyes_Were_Glassy_But_They_Were_Windows.txt" },
-    ];
+Hold on to the mystery of the night
+Said the mistressed as she turned off
+The back door light
+If there&#x27;s money comin in my body keeps all its might
+I&#x27;m givin all I got to keep my children upright
 
-    const book      = document.getElementById("book");
-    const stack     = document.getElementById("page-stack");
-    const prevBtn   = document.getElementById("prev-btn");
-    const nextBtn   = document.getElementById("next-btn");
-    const indicator = document.getElementById("indicator");
+I was wrestling with serpents
+And trolls on the road
+Drinking wine to light the fire
+That turned to half my name in snow
+The grey hills greeted no one&#32;
+When I went to confide
+I saw two figures moving forward
+Trying to hide
 
-    let pages = [];
-    let currentIndex = 0;
-    let isFlipping = false;
+Hold on to the mystery of the night
+Said the mistressed as she turned off
+The back door light
+If there&#x27;s money comin in my body keeps all its might
+I&#x27;m givin all I got to keep my children upright</pre>
+          <div class="song-actions">
+            <a href="#a-fire-inside">Link to this song</a>
+            <a href="/assets/lyrics/A_Fire_Inside.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+      <details class="song" id="come-back-down" name="songs">
+        <summary><span class="song-number" aria-hidden="true">02</span><h2 class="song-title">Come Back Down</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">Come back down the Yellowhead with me (lie low)
+Come back down the Yellowhead with me (lie low)
+We can sit under your favourite tree
+Your favourite snacks will be on me
+Snacks for free
+If you come back down&#32;
+The Yellowhead with me
 
-    const reduceMotion = () =>
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+You got lots of problems and so do I (lie low)
+You got lots of problems and so do I (lie low)
+You say our problems add together
+But I think they cancel out
+I searched my Math book for your picture
+Aasked a Math whiz all about
+If your problems and mine should add&#32;
+Or cancel out&#32;
 
-    function createPage(extraClass) {
-      const page = document.createElement("section");
-      page.className = "page" + (extraClass ? " " + extraClass : "");
-      // shading overlay used during flip
-      const shade = document.createElement("div");
-      shade.className = "page-shade";
-      shade.setAttribute("aria-hidden", "true");
-      page.appendChild(shade);
-      return page;
-    }
+Your daddy got sick the year before we met (lie low)
+Your daddy got sick the year before we met (lie low)
+From a picture on your fridge&#32;
+Staring back at me
+I asked him to bless
+Our holy unity
+I heard nothing at the fridge there
+News from heaven is rare
 
-    function buildCoverPage() {
-      const page = createPage("cover-page");
-      const content = document.createElement("div");
-      content.className = "page-content";
-      content.innerHTML = `
-        <h2 class="cover-title">Marv Moses</h2>
-        <div class="cover-sub">Songbook</div>
-        <div class="cover-mark" aria-hidden="true">·</div>
-      `;
-      page.appendChild(content);
-      return page;
-    }
+You can be cold the whole drive if you like (lie low)
+You can be cold the whole drive if you like (lie low)
+Last time at Blue River
+Our original sin
+Against our tree in Blue River
+The light poured in
+But you can be cold the whole drive if you like
 
-    function buildTocPage(songEntries, songStartPageNums) {
-      const page = createPage("toc");
-      const items = songEntries.map((entry, idx) => {
-        const pageNum1 = songStartPageNums ? songStartPageNums[idx] : (3 + idx);
-        const pageIndex0 = pageNum1 - 1;
-        return `
-          <li>
-            <a href="#" data-page-index="${pageIndex0}">${entry.title}</a>
-            <span class="toc-leader" aria-hidden="true"></span>
-            <span class="toc-pagenum">${pageNum1}</span>
-          </li>
-        `;
-      }).join("");
+Your aunt who doesn&#x27;t like me is in a wheelchair now (lie low)
+Your aunt who doesn&#x27;t like me is in a wheelchair now (lie low)
+For her and you and me I pray&#32;
+We&#x27;ll be wiped of sin&#32;
+I pray she&#x27;ll rise again to chase me&#32;
+With her rolling pin
+In her wheelchair now&#32;
+Your Aunt can&#x27;t catch me&#32;
+When she has a cow
 
-      const content = document.createElement("div");
-      content.className = "page-content";
-      content.innerHTML = `
-        <h2 class="toc-title">Contents</h2>
-        <div class="section-rule"></div>
-        <ol class="toc-list">${items}</ol>
-      `;
-      page.appendChild(content);
+At Christmas I&#x27;ll ask your dead dad for his blessing again (lie low)
+At Christmas I&#x27;ll ask your dead dad for his blessing again (lie low)
+I&#x27;ll ask the picture on
+The fridge again
+At the mall nativity I&#x27;ll ask the three wise men&#32;
+I&#x27;ll ask your cousin&#x27;s best friend&#32;
+I&#x27;ll ask all of Edmonton
 
-      const num = document.createElement("div");
-      num.className = "page-number";
-      num.textContent = "ii";
-      page.appendChild(num);
-      return page;
-    }
+Come back down the Yellowhead with me (lie low)
+Come back down the Yellowhead with me (lie low)
+We can sit under your favourite tree
+Your favourite snacks will be on me
+Snacks for free
+If you come back down&#32;
+The Yellowhead with me</pre>
+          <div class="song-actions">
+            <a href="#come-back-down">Link to this song</a>
+            <a href="/assets/lyrics/Come_Back_Down.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+      <details class="song" id="greasy-sun" name="songs">
+        <summary><span class="song-number" aria-hidden="true">03</span><h2 class="song-title">Greasy Sun</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">A broken man was standing on a street in my town
+Faces winced as they made their rounds
+Marching with the pride of a million kings
+To beat this land
+Broken faces shifted&#32;
+Joy was lost in the sand
 
-    // Build the DOM shell for one spread of a song.
-    // First spread shows the title; continuation spreads show "Title (cont.)".
-    function buildSongSpread(title, isContinuation) {
-      const page = createPage("song");
-      const content = document.createElement("div");
-      content.className = "page-content";
+Hope lost in a valley
+Where it once was supreme
+A dairy queen a bike
+A deal on gasoline
+No money coming here without a sacrifice
+I see you reach until you feel and die gently
 
-      const spread = document.createElement("div");
-      spread.className = "spread";
+Tell me isn&#x27;t it nice
+To be home
+Again
+Blast it wide open&#32;
+And give it a shot to heal
+The breathing that&#x27;s getting so hard
+To explain
+Away
+The fear and the yearning
+The coming undone
+When we live with our vice under a greasy sun
 
-      const leftCol = document.createElement("div");
-      leftCol.className = "spread-col spread-col-left";
+Davey and Jim are down at the rink
+The world is ending
+They wanna know what you think
+About your track scholarship&#32;
+And your girl on the street
+Your brains feel heavy with the words you should eat
+If only you had known that summer&#32;&#32;
 
-      if (!isContinuation) {
-        const heading = document.createElement("h2");
-        heading.className = "song-title";
-        heading.textContent = title;
-        const rule = document.createElement("div");
-        rule.className = "section-rule";
-        leftCol.appendChild(heading);
-        leftCol.appendChild(rule);
-      } else {
-        const cont = document.createElement("div");
-        cont.className = "song-cont";
-        cont.textContent = title + " — cont.";
-        leftCol.appendChild(cont);
-      }
+Tell me isn&#x27;t it nice&#32;
+To be home&#32;
+Again&#32;
+Blast it wide open&#32;
+And give it a shot to heal
+The breathing that&#x27;s getting so hard
+To explain&#32;
+Away&#32;
+The fear and the yearning
+The coming undone&#32;
+When we live with our vice under a greasy sun</pre>
+          <div class="song-actions">
+            <a href="#greasy-sun">Link to this song</a>
+            <a href="/assets/lyrics/Greasy_Sun.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+      <details class="song" id="halifax" name="songs">
+        <summary><span class="song-number" aria-hidden="true">04</span><h2 class="song-title">Halifax</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">Spring fever No. 1
+Pelican
+Forgotten Sun
+Glass Slipper right on time
+Janice R makes Jerry&#x27;s dime
 
-      const leftPre = document.createElement("pre");
-      leftPre.className = "lyrics";
-      leftCol.appendChild(leftPre);
+Water houses bought and sold
+We&#x27;re gettin home
+We&#x27;re doin fine
+Magazines
+Cigarretes
+Chewing gum
+Wine&#32;
 
-      const rightCol = document.createElement("div");
-      rightCol.className = "spread-col spread-col-right";
-      const rightPre = document.createElement("pre");
-      rightPre.className = "lyrics";
-      rightCol.appendChild(rightPre);
+Please help me
+Halifax
+Get me down and off these tracks tonight&#32;
+Peter&#32;
+Paul
+And blue backpacks
+Get me down and off these tracks tonight
 
-      spread.appendChild(leftCol);
-      spread.appendChild(rightCol);
-      content.appendChild(spread);
-      page.appendChild(content);
+Pacific Peter has a gun
+Master Chris gave me a tonne
+The Bank Robber is from California
+Big &amp; blue he will not mourn ya
 
-      const num = document.createElement("div");
-      num.className = "page-number";
-      num.textContent = "";
-      page.appendChild(num);
-      return page;
-    }
+A lesson new
+A lesson wide
+A salty breather
+Bona fide
 
-    // Greedily fill a <pre> with lines until it would overflow its column.
-    // Returns the next line index to consume.
-    function fillPre(pre, lines, startIdx) {
-      let i = startIdx;
-      pre.textContent = "";
-      let placedAny = false;
-      // Skip leading blank lines at the start of a column
-      while (i < lines.length && lines[i].trim() === "") i++;
-      while (i < lines.length) {
-        const prev = pre.textContent;
-        pre.textContent = (prev ? prev + "\n" : "") + lines[i];
-        if (pre.scrollHeight > pre.clientHeight + 1) {
-          if (!placedAny) {
-            // Force one line so we always make progress
-            i++;
-            placedAny = true;
-            continue;
-          }
-          // Greedy fill — verses may split across columns/spreads.
-          pre.textContent = prev;
-          break;
-        }
-        i++;
-        placedAny = true;
-      }
-      pre.textContent = pre.textContent.replace(/\s+$/, "");
-      return i;
-    }
+Let me open your Atlantic Ocean
+Airplane
+Antarctic
+Arctic
+Yes
+We tried
 
-    // Paginate one song into one or more spread pages.
-    // Spreads must be appended into the live page-stack so layout is computed.
-    function paginateSongInto(title, lyrics) {
-      const normalized = lyrics.replace(/\r\n/g, "\n").replace(/\n{3,}/g, "\n\n");
-      const lines = normalized.split("\n");
-      const spreads = [];
-      let idx = 0;
-      let isCont = false;
-      let safety = 0;
+Please help me
+Halifax
+Get me down and off these tracks tonight&#32;
+Peter&#32;
+Paul
+And blue backpacks
+Get me down and off these tracks tonight</pre>
+          <div class="song-actions">
+            <a href="#halifax">Link to this song</a>
+            <a href="/assets/lyrics/Halifax.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+      <details class="song" id="sagebrush" name="songs">
+        <summary><span class="song-number" aria-hidden="true">05</span><h2 class="song-title">Sagebrush</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">Silverado city
+And a blanket of smoke
+Close the door behind me now
+I am going for broke
+A pause a click a jog be quick
+That sky is comin on thick
 
-      while (idx < lines.length && safety++ < 20) {
-        const page = buildSongSpread(title, isCont);
-        stack.appendChild(page);
+The heavy half is lighter than
+The days that might stretch ahead
+Pretend you aren&#x27;t shakin man
+Get your body out of that door
 
-        const leftPre  = page.querySelector(".spread-col-left  .lyrics");
-        const rightPre = page.querySelector(".spread-col-right .lyrics");
+You think your on to something big
+Think you got somethin to say
+The desert pressin down on you
+There will be another day
 
-        idx = fillPre(leftPre, lines, idx);
-        if (idx < lines.length) {
-          idx = fillPre(rightPre, lines, idx);
-        }
+Your winter was a fitful sleep
+I know mine was a hill so steep
+Your ceiling panels, window frames
+Remember those forgotten names
 
-        spreads.push(page);
-        isCont = true;
-      }
+Two steps and a cowboy nod
+Streets named for a fantasy
+We made our move, we climbed that hill
+We held it high for all to see
 
-      if (spreads.length === 0) {
-        // Empty lyrics — still emit a single page so the song exists.
-        const page = buildSongSpread(title, false);
-        stack.appendChild(page);
-        spreads.push(page);
-      }
+You think your on to something big
+Think you got somethin to say
+The desert pressin down on you
+There will be another day</pre>
+          <div class="song-actions">
+            <a href="#sagebrush">Link to this song</a>
+            <a href="/assets/lyrics/Sagebrush.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+      <details class="song" id="say-i-can-stay" name="songs">
+        <summary><span class="song-number" aria-hidden="true">06</span><h2 class="song-title">Say I Can Stay</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">Say I can stay
+Into the night
+Until you come
 
-      return spreads;
-    }
+That rotten time of the year
+Has you shaking
+Wrapping thoughts around a man
+If you had your way and were near
+Would you re-evaluate your plan?
 
-    function buildErrorPage(title, pageNum) {
-      const page = createPage("song");
+Say I can stay
+Into the night
+Until you come
 
-      const content = document.createElement("div");
-      content.className = "page-content";
-      content.style.display = "flex";
-      content.style.flexDirection = "column";
-      content.style.alignItems = "center";
-      content.style.justifyContent = "center";
-      content.style.textAlign = "center";
+White wine flows just like white wine
+tell me if a way out even exists
+then you can stay on track to take
+take take take</pre>
+          <div class="song-actions">
+            <a href="#say-i-can-stay">Link to this song</a>
+            <a href="/assets/lyrics/Say_I_Can_Stay.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+      <details class="song" id="snapdragons" name="songs">
+        <summary><span class="song-number" aria-hidden="true">07</span><h2 class="song-title">Snapdragons</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">You slept at the bottom of Hemingway&#x27;s driveway
+You set choker cables on the coast
+You charmed them on the railway
+Some of them will miss you the most
 
-      const heading = document.createElement("h2");
-      heading.className = "song-title";
-      heading.textContent = title;
+Joe is waiting, you don&#x27;t want to be late
+The route is getting shorter and there&#x27;s much to discuss&#32;
+A best friend blind in only his eyes
+Early morning river walking, talking staying alive&#32;
 
-      const rule = document.createElement("div");
-      rule.className = "section-rule";
+She loves you now and she loved you then
+In God&#x27;s hands from now on
+A gentleman a prairie son
+Love shoots to #1
 
-      const msg = document.createElement("p");
-      msg.textContent = "Lyrics unavailable right now.";
-      msg.style.cssText =
-        "color: var(--accent); font-family: 'Special Elite', 'Roboto Condensed', monospace; " +
-        "letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem;";
+The cherry tree misses you
+And so does this town
+And your kids and your roses&#32;
+And your Snapdragons
 
-      content.appendChild(heading);
-      content.appendChild(rule);
-      content.appendChild(msg);
-      page.appendChild(content);
+You rolled the dice on finding love
+You won and dug in deep
+You burned through some great books
+Your thoughts on them I&#x27;ll keep
 
-      const num = document.createElement("div");
-      num.className = "page-number";
-      num.textContent = pageNum;
-      page.appendChild(num);
-      return page;
-    }
+Curling and BSing were your expertise
+You taught me the names&#32;
+Of our desert city&#x27;s trees
 
-    function updateIndicator() {
-      const total = pages.length;
-      indicator.textContent = `${currentIndex + 1} / ${total}`;
-      prevBtn.disabled = currentIndex <= 0 || isFlipping;
-      nextBtn.disabled = currentIndex >= total - 1 || isFlipping;
-    }
+Dominion St misses you, so does this place
+So does your rhubarb
+So do your roses
+So do your snapdragons</pre>
+          <div class="song-actions">
+            <a href="#snapdragons">Link to this song</a>
+            <a href="/assets/lyrics/Snapdragons.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+      <details class="song" id="sunrise" name="songs">
+        <summary><span class="song-number" aria-hidden="true">08</span><h2 class="song-title">Sunrise</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">Sunrise forget
+The fade-out hasn&#x27;t struck yet
+Whisper repeat, get back on your feet
+Your time is set
 
-    function showPage(index, direction) {
-      if (index < 0 || index >= pages.length) return;
-      if (index === currentIndex) return;
+A grocery store one who gave more
+Another sequence to the score
+Summers, dust, sagebrush and rust
+And some notes you taped to your own door
 
-      const current = pages[currentIndex];
-      const target  = pages[index];
+Saw a light reaching to your hair
+Didn&#x27;t mean to leave you on the stair
+Caught in that dream&#32;
+It was silent at the seam
+Catching that blue light&#x27;s glair
 
-      if (reduceMotion()) {
-        current.classList.remove("active");
-        target.classList.add("active");
-        currentIndex = index;
-        updateIndicator();
-        return;
-      }
+She said the light&#x27;s gone out
+I know the light&#x27;s still burning</pre>
+          <div class="song-actions">
+            <a href="#sunrise">Link to this song</a>
+            <a href="/assets/lyrics/Sunrise.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+      <details class="song" id="take-two" name="songs">
+        <summary><span class="song-number" aria-hidden="true">09</span><h2 class="song-title">Take Two</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">There&#x27;s a kid inside
+He&#x27;s never been so sure
+If you asked him once
+He&#x27;d tell you everything you wanted to hear
+If you asked him twice&#32;
+He&#x27;d show you your greatest fear
 
-      isFlipping = true;
-      updateIndicator();
+If she lifts you up
+Lift her up even higher
+If she lifts you up
+Lift her up even high
+If she lifts you up&#32;
+Lift her up even higher
+If she lifts you up
+Lift her up even high
 
-      if (direction === "forward") {
-        target.classList.add("active");
-        current.classList.add("flipping-forward");
-        const onEnd = () => {
-          current.classList.remove("active", "flipping-forward");
-          current.style.transform = "";
-          currentIndex = index;
-          isFlipping = false;
-          updateIndicator();
-          current.removeEventListener("animationend", onEnd);
-        };
-        current.addEventListener("animationend", onEnd);
-      } else {
-        target.style.transform = "rotateY(-178deg)";
-        target.classList.add("active", "flipping-back");
-        const onEnd = () => {
-          current.classList.remove("active");
-          target.classList.remove("flipping-back");
-          target.style.transform = "";
-          currentIndex = index;
-          isFlipping = false;
-          updateIndicator();
-          target.removeEventListener("animationend", onEnd);
-        };
-        target.addEventListener("animationend", onEnd);
-      }
-    }
+There&#x27;s a dog outside
+He&#x27;s hungry and bleedin&#x27; and knows it
+She throws him a meal
+His chain won&#x27;t let him reach it
+And when winter winter comes
+That frozen lake is a temptress
 
-    function goNext() {
-      if (isFlipping) return;
-      if (currentIndex < pages.length - 1) showPage(currentIndex + 1, "forward");
-    }
-    function goPrev() {
-      if (isFlipping) return;
-      if (currentIndex > 0) showPage(currentIndex - 1, "backward");
-    }
-    function goTo(index) {
-      if (isFlipping || index === currentIndex) return;
-      const direction = index > currentIndex ? "forward" : "backward";
-      showPage(index, direction);
-    }
+If she lifts you up
+Lift her up even higher
+If she lifts you up
+Lift her up even high
+If she lifts you up&#32;
+Lift her up even higher
 
-    prevBtn.addEventListener("click", goPrev);
-    nextBtn.addEventListener("click", goNext);
+(And my angels said)</pre>
+          <div class="song-actions">
+            <a href="#take-two">Link to this song</a>
+            <a href="/assets/lyrics/Take_Two.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+      <details class="song" id="time-trial" name="songs">
+        <summary><span class="song-number" aria-hidden="true">10</span><h2 class="song-title">Time Trial</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">You rode the crappy bike
+I rode the shiny one
+Porridge on the back porch
+Underneath a greasy sun
+This life was meant for you
 
-    document.addEventListener("keydown", (e) => {
-      if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
-      if (e.key === "ArrowRight" || e.key === "PageDown") { e.preventDefault(); goNext(); }
-      else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); goPrev(); }
-      else if (e.key === "Home") { e.preventDefault(); goTo(0); }
-      else if (e.key === "End")  { e.preventDefault(); goTo(pages.length - 1); }
-    });
+Open to adventures
+And teaching times tables
+Walking through a desert city
+Phone calls through a trillion cables
+This life was meant for you
 
-    async function loadSongbook() {
-      const results = await Promise.allSettled(
-        songs.map(async ({ title, file }) => {
-          const safeFile = encodeURIComponent(file);
-          const response = await fetch(`/assets/lyrics/${safeFile}`);
-          if (!response.ok) {
-            throw new Error(`Could not load ${file}: ${response.status} ${response.statusText}`);
-          }
-          const text = await response.text();
-          return { title, lyrics: text };
-        })
-      );
+Do you know where the kitchen is?
+The halls knew where you were
+Do you know where the kitchen is?
+The kids knew where you were
+This life was meant for you
 
-      const loaded = results.map((result, idx) => {
-        if (result.status === "fulfilled") {
-          return { title: songs[idx].title, lyrics: result.value.lyrics, ok: true };
-        }
-        console.error("Songbook lyric load failure:", songs[idx].title, result.reason);
-        return { title: songs[idx].title, lyrics: "", ok: false };
-      });
+Alone is how I thought of you
+But I know how your mind spins&#32;
+With world events and car payments
+And this modern living
+This life was meant for you
 
-      // Reset page stack
-      stack.textContent = "";
-      pages = [];
+Do you know where the TV is?
+Let&#x27;s go there for a break
+Do you know where the TV is?
+Let&#x27;s eat it&#x27;s getting late
+This life was meant for you
 
-      // 1. Cover
-      const coverPage = buildCoverPage();
-      stack.appendChild(coverPage);
-      pages.push(coverPage);
+If I said a Rosary
+Would everything be said?
+A guiding voice
+Some pause inside my head
+This life was meant for you
 
-      // 2. TOC placeholder — paginating songs needs the stack to have layout,
-      //    and we want the TOC to sit at index 1. We'll swap in the real TOC
-      //    once song page numbers are known.
-      const tocPlaceholder = createPage("toc");
-      stack.appendChild(tocPlaceholder);
-      pages.push(tocPlaceholder);
+Do you know where the front door is?
+The place it tortured you
+Do you know where the front door is?
+Some fear took place of you
+This life was meant for you
 
-      // Wait for fonts so measurement is accurate
-      if (document.fonts && document.fonts.ready) {
-        try { await document.fonts.ready; } catch (_) {}
-      }
+An architect, an engineer
+A sunday dinner queen
+It&#x27;s not your fault it&#x27;s just too much
+The meds aren&#x27;t that clean
+This life was meant for you</pre>
+          <div class="song-actions">
+            <a href="#time-trial">Link to this song</a>
+            <a href="/assets/lyrics/Time_Trial.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+      <details class="song" id="tired-twin" name="songs">
+        <summary><span class="song-number" aria-hidden="true">11</span><h2 class="song-title">Tired Twin</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">I&#x27;ve spent nine nights out here
+With my brother on the run
+And a fear&#x27;s not a fear&#32;
+If it doesn&#x27;t leave my tongue
+The conductor didn&#x27;t see my brother fire his gun
+The lights were dim to light the fight he won
 
-      // 3. Paginate each song, recording its starting 1-based page number
-      const songStartPageNums = [];
-      loaded.forEach((entry) => {
-        const startPageNum = pages.length + 1;
-        songStartPageNums.push(startPageNum);
-        const spreads = entry.ok
-          ? paginateSongInto(entry.title, entry.lyrics)
-          : (() => {
-              const p = buildErrorPage(entry.title, "");
-              stack.appendChild(p);
-              return [p];
-            })();
-        for (const sp of spreads) pages.push(sp);
-      });
+The code that keeps me moving is in blood
+And I can&#x27;t sleep now
+Damn the sagebrush in my window
+And the sweat on my brow
 
-      // 4. Replace TOC placeholder with the real TOC
-      const tocPage = buildTocPage(loaded, songStartPageNums);
-      stack.replaceChild(tocPage, tocPlaceholder);
-      pages[1] = tocPage;
+The stars they shot like rockets
+As the houses burned down
+There were people in the street
+When the man came around
+If I had my way I&#x27;d run&#32;
+As fast as I could
+I&#x27;m broke I&#x27;m broken and my brains are no good
 
-      // 5. Renumber every page's footer
-      pages.forEach((p, i) => {
-        const num = p.querySelector(".page-number");
-        if (!num) return;
-        if (p.classList.contains("cover-page")) { num.textContent = ""; return; }
-        if (i === 1) { num.textContent = "ii"; return; }
-        num.textContent = String(i + 1);
-      });
+The code that keeps me moving is in blood&#32;
+And I can&#x27;t sleep now&#32;
+Damn the sagebrush in my window&#32;
+And the sweat on my brow
 
-      pages[0].classList.add("active");
-      currentIndex = 0;
-      updateIndicator();
+I sit in this cell as the angels float down
+No drink no women not a man about town
+I said I&#x27;d back you, I was shaky in my word
+But when the wire was down to
+I put myself third
 
-      // TOC links
-      stack.addEventListener("click", (e) => {
-        const link = e.target.closest("a[data-page-index]");
-        if (!link) return;
-        e.preventDefault();
-        const idx = parseInt(link.getAttribute("data-page-index"), 10);
-        if (Number.isInteger(idx) && idx >= 0 && idx < pages.length) goTo(idx);
-      });
+The code that keeps me moving is in blood
+And I can&#x27;t sleep now
+Damn the sagebrush in my window
+And the sweat on my brow
 
-      // Open the cover after a beat
-      requestAnimationFrame(() => {
-        setTimeout(() => book.classList.add("opened"), 350);
-      });
-    }
+The code that keeps me moving is in blood
+And I can&#x27;t sleep now
+Damn the sagebrush in my window
+And the sweat on my brow</pre>
+          <div class="song-actions">
+            <a href="#tired-twin">Link to this song</a>
+            <a href="/assets/lyrics/Tired_Twin.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+      <details class="song" id="well-dad" name="songs">
+        <summary><span class="song-number" aria-hidden="true">12</span><h2 class="song-title">Well Dad</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">Well Dad don&#x27;t you think it is so funny
+We both get our suppers all over our chins?
+And Dad is it true
+There is a kid inside you
+Who gets sad and scared like I do?
 
-    loadSongbook();
-  </script>
+Well Mae we both eat up our suppers so quick
+And your chin is a small version of mine
+And yes Mae all grown-ups
+Have a kid down inside
+Who gets hurt and heals over time
+
+Well Dad I think I get it
+But there&#x27;s one thing I do not
+You say you love me in your truck
+And at the door
+You used to say it to mommy
+And if love&#x27;s so good
+Why don&#x27;t you say it to her anymore?
+
+Well Mae I know one thing-
+Yeah one thing or two
+But probably not more than three
+I know love is every animal
+Plant place and thing
+Yeah it is everywhere that you will ever be
+
+I know some people get trapped
+By some things they don&#x27;t know
+Yeah that they fight and they squirm to get free
+And in the place where they&#x27;re trapped
+They can&#x27;t see the love
+They are in a dark and cold place with no key
+
+Well Dad when I&#x27;m bigger than six I might get it&#32;
+But my brain has been whirring at night
+How will I find you if you are nine hours away
+Yeah if you are gone then I can&#x27;t hold you tight
+
+And Dad I had a dream
+I fell into a black hole
+And I spied
+Spied with my little eye
+Each shape and colour that God&#x27;s ever made
+Yeah and two of them were you and I
+
+And we danced like we do
+And we weren&#x27;t scared at all&#32;
+Yeah we could turn flip and spin anywhere
+Mommy and Violet and Merle were with us
+Yeah even dogs with their families danced there
+
+Well Mae this is the one thing
+Yeah one thing I know&#32;
+Yeah one thing I know about love
+It is in all space and time
+Yeah it&#x27;s darkest of places
+Inside below and above
+
+And Mae I must tell you I have seen these shapes too
+And on these days and nights now I am alone
+I go to this place
+Where we dance and sing sweet songs
+Like the ones that you sing on the phone
+
+And when you&#x27;re a grown-up
+And I only live there
+In this place that we know we&#x27;ve both found
+You&#x27;ll know that your love is all love
+And it&#x27;s never not there
+Never not there when you can&#x27;t hear its sound
+
+Well Dad don&#x27;t you think it is so funny
+We both get our suppers all over our chins?
+And Dad is it true
+There is a kid inside you
+Who gets sad and scared like I do?
+
+Well Mae we both eat up our suppers so quick
+And your chin is a small version of mine
+And yes Mae all grown-ups
+Have a kid down inside
+Who gets hurt and heals over time</pre>
+          <div class="song-actions">
+            <a href="#well-dad">Link to this song</a>
+            <a href="/assets/lyrics/Well_Dad.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+      <details class="song" id="your-eyes-were-glassy-but-they-were-windows" name="songs">
+        <summary><span class="song-number" aria-hidden="true">13</span><h2 class="song-title">Your Eyes Were Glassy But They Were Windows</h2></summary>
+        <div class="song-body">
+          <pre class="lyrics">Your eyes were glassy but they were windows
+Your eyes were glassy but wide open&#32;
+Your eyes were glassy but they were quick&#32;&#32;
+Your eyes were glassy and half-broken&#32;
+Your eyes were glassy but present&#32;
+Your eyes were glassy but not alone&#32;
+Your eyes were glassy but they were still here&#32;
+Your eyes were glassy but they were windows</pre>
+          <div class="song-actions">
+            <a href="#your-eyes-were-glassy-but-they-were-windows">Link to this song</a>
+            <a href="/assets/lyrics/Your_Eyes_Were_Glassy_But_They_Were_Windows.txt" download>Download lyrics</a>
+          </div>
+        </div>
+      </details>
+<!-- SONGS END -->
+    </div>
+    <p id="no-results" class="empty-state" hidden>No songs found. Try another title or clear your search.</p>
+  </main>
+  <footer class="site-footer page-footer">
+
+    <div class="social-links"><a href="https://marvmoses.bandcamp.com">Bandcamp</a><a href="https://instagram.com/marvmoses">Instagram</a><a href="mailto:contact@jellohead.com">Email</a></div>
+  </footer>
 </body>
 </html>

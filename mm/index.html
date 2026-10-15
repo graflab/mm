@@ -2,73 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Marv Moses Is Jellohead</title>
+  <meta name="description" content="Marv Moses is Jellohead. Music, lyrics, tour dates and contact.">
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/site.css">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "Roboto Condensed", sans-serif;
-      background: #000;
-    }
-
-    .background-wrapper {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      background: url('prairie.gif') no-repeat center center;
-      background-size: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .logo-link {
-      display: inline-block;
-      transition: transform 0.3s ease, filter 0.3s ease;
-      cursor: pointer;
-    }
-
-    .logo-link:hover {
-      transform: scale(1.06);
-      filter: drop-shadow(0 0 18px rgba(218, 41, 28, 0.6));
-    }
-
-    .logo {
-      width: 30vw;
-      max-width: 200px;
-      display: block;
-    }
-
-    @media (max-width: 600px) {
-      .logo {
-        width: 50vw;
-      }
-    }
-  </style>
 </head>
-<body>
-  <div class="background-wrapper">
-    <div class="container">
-      <a href="/jellohead" class="logo-link" aria-label="Enter site">
-        <img src="logo.svg" alt="Marv Moses — Click to enter" class="logo">
-      </a>
-    </div>
-  </div>
+<body class="home">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <h1 class="site-name">Marv Moses</h1>
+    <p class="site-subtitle">is jellohead</p>
+  </header>
+
+  <main id="main" class="home-main">
+    <figure class="portrait">
+      <img src="/assets/images/marv-moses-portrait.webp" alt="A painted portrait of Marv Moses propped on a wooden table" width="983" height="1400" fetchpriority="high">
+    </figure>
+  </main>
+  <footer class="site-footer">
+    <nav class="site-nav" aria-label="Main navigation">
+  <a href="/" aria-current="page">Home</a>
+  <a href="/jellohead/tour/">Tour</a>
+  <a href="/jellohead/songs/">Songbook</a>
+  <a href="/jellohead/store/">Store</a>
+  <a href="/jellohead/links/">Contact</a>
+</nav>
+    <div class="social-links"><a href="https://marvmoses.bandcamp.com">Bandcamp</a><a href="https://instagram.com/marvmoses">Instagram</a><a href="mailto:contact@jellohead.com">Email</a></div>
+  </footer>
 </body>
 </html>

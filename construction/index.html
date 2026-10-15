@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Under construction — Marv Moses</title>
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body class="construction-page">
+  <main class="construction-content" aria-label="Under construction">
+    <img src="/construction.gif" alt="Under construction">
+    <a id="back-link" class="back-button" href="/">← Back</a>
+  </main>
+  <script>
+    const backLink = document.getElementById('back-link');
+    if (document.referrer) {
+      const previous = new URL(document.referrer);
+      if (previous.origin === location.origin && previous.pathname !== location.pathname) {
+        backLink.href = previous.href;
+        backLink.addEventListener('click', event => {
+          if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && history.length > 1) {
+            event.preventDefault();
+            history.back();
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>

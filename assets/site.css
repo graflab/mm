@@ -69,6 +69,12 @@ button { cursor: pointer; }
 .song-actions a { padding: 6px 0; }
 .empty-state { padding: 20px 0; }
 .page-footer { width: min(100% - 40px, 720px); margin: 0 auto; border-top: 1px solid var(--rule); }
+.construction-page { min-height: 100svh; display: grid; place-items: center; padding: 24px; }
+.construction-content { position: relative; text-align: center; max-width: 100%; }
+.construction-content img { display: block; max-width: 100%; height: auto; }
+.back-button { display: inline-block; padding: 10px 20px; border: 1px solid var(--rule); text-decoration: none; }
+.construction-content .back-button { position: absolute; top: calc(100% + 28px); left: 50%; transform: translateX(-50%); white-space: nowrap; }
+.back-button:hover { background: #f0f2ec; }
 @media (max-width: 480px) {
   .site-header { padding-top: 30px; }
   .site-nav { gap: 0 18px; }
